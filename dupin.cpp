@@ -9,9 +9,10 @@
 #include <cstring>
 #include <array>
 #include <unordered_map>
-
+#include "dupin.h"
+//#include <pybind11/numpy.h>
 using namespace std;
-
+/*
 int num_bkps;
 int num_parameters;
 int num_timesteps;
@@ -19,8 +20,11 @@ int jump;
 int min_size;
 vector<vector<double>> datum;
 vector <vector<double>> cost_matrix;
+*/
 
-void read_input() {
+
+
+void dupinalgo::read_input() {
 	cin >> jump >> min_size >> num_bkps >> num_parameters >> num_timesteps;
 	datum.resize(num_timesteps, vector<double>(num_parameters));
 	double temp;
@@ -32,20 +36,14 @@ void read_input() {
 	}
 }
 
+void dupinalgo::readinputpybind() {
+
+}
 
 
-struct linear_fit_struct {
-	vector<vector<double>> y;
-	vector<double> x;
-	double sum_x = 0.0;
-	double sum_y = 0.0;
-	double sum_xx = 0.0;
-	double sum_xy = 0.0;
-	
-};
 
 
-void regression_setup(linear_fit_struct &lfit) {
+void dupinalgo::regression_setup(linear_fit_struct &lfit) {
 	lfit.x.resize(num_timesteps);
 	//normalize timestep vecotr
 	for (int i = 0; i < num_timesteps; ++i) {
@@ -54,7 +52,7 @@ void regression_setup(linear_fit_struct &lfit) {
 	lfit.y = datum;
 }
 
-vector<double> regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
+vector<double> dupinalgo::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
 	vector<double> line;
 	int n = end - start;
 	cout << "Dimension: " << dim << "\n";
@@ -91,7 +89,7 @@ vector<double> regressionline(int start, int end, int dim, linear_fit_struct &lf
 	 
 }
 
-double l2_cost(vector<vector<double>>& predicted_y, int start, int end) {
+double dupinalgo::l2_cost(vector<vector<double>>& predicted_y, int start, int end) {
 	double sum = 0;
 	int n = end - start;
 	double diff = 0;
@@ -107,16 +105,16 @@ double l2_cost(vector<vector<double>>& predicted_y, int start, int end) {
 }
 
 
-vector<double> computeCumulativeSum(vector<double>& arr) {
+/*vector<double> computeCumulativeSum(vector<double>& arr) {
 	vector<double> cumsum(arr.size() + 1, 0.0);
 	for (int i = 0; i < arr.size(); ++i) {
 		cumsum[i + 1] = cumsum[i] + arr[i];
 	}
 	return cumsum;
 }
+*/
 
-
-vector <vector <double>>  predicted(int start, int end, linear_fit_struct &lfit) {
+vector <vector <double>>  dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
 	vector<vector<double>> predicted_y(num_timesteps, vector<double>(num_parameters));
 	
 	for (int i = 0; i < num_parameters; i++) {
@@ -128,7 +126,7 @@ vector <vector <double>>  predicted(int start, int end, linear_fit_struct &lfit)
 	}
 	return predicted_y;
 }
-double cost_function(int start, int end) {
+double dupinalgo::cost_function(int start, int end) {
 	
 	linear_fit_struct lfit;
 	regression_setup(lfit);
@@ -157,7 +155,7 @@ double cost_function(int start, int end) {
 }
 
 
-vector<vector<double>> initialize_cost_matrix(vector<vector<double>>& datum) {  //initialize and return the cost matrix
+vector<vector<double>> dupinalgo::initialize_cost_matrix(vector<vector<double>>& datum) {  //initialize and return the cost matrix
 	
 
 	cost_matrix.resize(num_timesteps, vector<double>(num_timesteps, 0.0));// only fill out half the matrix
@@ -171,7 +169,7 @@ vector<vector<double>> initialize_cost_matrix(vector<vector<double>>& datum) {  
 	return cost_matrix;
 
 }
-vector<int> admissible_bkps(int start, int end, int num_bkps) {
+vector<int> dupinalgo::admissible_bkps(int start, int end, int num_bkps) {
 	vector <int> list;
 	int num_samples;
 	for (int i = start; i < end; i = i + 1) {
@@ -187,7 +185,7 @@ vector<int> admissible_bkps(int start, int end, int num_bkps) {
 
 unordered_map<int, unordered_map<int, double>> memo; //think about using 2d vector/array here//1d vector
 //top down recursive implementation
-double seg(int start, int end, int num_bkps) {
+double dupinalgo::seg(int start, int end, int num_bkps) {
 	//recurrence to find the optimal partition
 	double cost;
 	vector<int> goodbkps;
@@ -220,7 +218,7 @@ double seg(int start, int end, int num_bkps) {
 }
 
 //Now.. return the breakpoints with a while loop !
-vector<int> return_breakpoints() {
+vector<int> dupinalgo::return_breakpoints() {
 	vector<int> opt_bkps;
 	opt_bkps.reserve(num_bkps);
 	
@@ -249,7 +247,11 @@ vector<int> return_breakpoints() {
 //	std::reverse(opt_bkps.begin(), opt_bkps.end());
 	return opt_bkps;
 }
-vector<int> bottomup_bkps() {
+
+vector<int> dupinalgo::getTopDownBreakpoints() {
+	return dupinalgo::return_breakpoints();
+}
+vector<int> dupinalgo::bottomup_bkps() {
 
 	//bottom up implementation; avoid recursion so can avoid a 
 //very large stack of memory needed for much larger structural changes
@@ -288,31 +290,32 @@ vector<int> bottomup_bkps() {
 }
 
 int main() {
-	read_input();
+	dupinalgo dupin;
+	dupin.read_input();
 	cout << "Validating input: \n";
-	for (int i = 0; i < num_timesteps; i++) {
-		for (int j = 0; j < num_parameters; j++) {
-			cout << datum[i][j]<< " ";
+	for (int i = 0; i < dupin.num_timesteps; i++) {
+		for (int j = 0; j < dupin.num_parameters; j++) {
+			cout << dupin.datum[i][j]<< " ";
 		}
 		cout << endl;
 	}
-	initialize_cost_matrix(datum);
+	dupin.initialize_cost_matrix(dupin.datum);
 	cout << "Validating cost matrix: \n";
-	for (int i = 1; i <= num_timesteps; i++) {
+	for (int i = 1; i <= dupin.num_timesteps; i++) {
 		cout << setw(12) << i << " ";
 	}
 	cout << endl;
-	for (int i = 0; i < num_timesteps; i++) {
+	for (int i = 0; i < dupin.num_timesteps; i++) {
 		cout << i + 1 << " ";
-		for (int j = 0; j < num_timesteps; j++) {
-			cout << setw(12)<< setprecision(8)<< cost_matrix[i][j] << "|";
+		for (int j = 0; j < dupin.num_timesteps; j++) {
+			cout << setw(12)<< setprecision(8)<< dupin.cost_matrix[i][j] << "|";
 		}
 		cout << endl;
 	}
 //test top down
-	auto breakponts = return_breakpoints();
+	auto breakponts = dupin.getTopDownBreakpoints();
 	cout << "top down results: ";
-	for (int i = 0; i <= num_bkps; i++) {
+	for (int i = 0; i <= dupin.num_bkps; i++) {
 		cout << breakponts[i] << " "; 
 	}
 	

@@ -18,8 +18,11 @@
     <ClCompile Include="dupin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dupininterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="organizedDupin.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,5 +32,13 @@
     <Text Include="output.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="CMakeLists.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dupin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
