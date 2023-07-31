@@ -1,14 +1,15 @@
-cmake_minimum_required(VERSION 3.12)
-project(dupin)
+cmake_minimum_required(VERSION 3.8)
+project(_dupin)
 
+set(DEFAULT_BUILD_TYPE Release)
 
+add_subdirectory(extern/pybind11)
 
-include_directories(${PROJECT_SOURCE_DIR}/extern)
+pybind11_add_module(_dupin dupin.h dupin.cpp dupininterface.cpp)
 
-find_package(pybind11 CONFIG REQUIRED)
+set_target_properties(_dupin PROPERTIES
+    CXX_STANDARD 17
+    CMAKE_CXX_STANDARD_REQUIRED True
+)
 
-PYBIND11_ADD_MODULE(testinglib MODULE dupin.h dupininterface.cpp)
-
-target_link_libraries(testinglib PRIVATE pybind11::module)
-
-p
+target_compile_definitions(_dupin PRIVATE VERSION_INFO=${VERSION_INFO})
