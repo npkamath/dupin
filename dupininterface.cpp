@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(dupin_pybind, m) {
+PYBIND11_MODULE(_dupin, m) {
     py::class_<dupinalgo>(m, "Dupin")
         .def(py::init<>())
         .def("read_input", &dupinalgo::read_input)
