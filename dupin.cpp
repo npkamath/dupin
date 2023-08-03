@@ -233,6 +233,7 @@ double dupinalgo::seg(int start, int end, int num_bkps) {
 vector<int> dupinalgo::return_breakpoints() {
 	vector<int> opt_bkps;
 	opt_bkps.reserve(num_bkps + 1);
+	opt_bkps.push_back(num_timesteps - 1);
 
 	if (num_bkps > cost_matrix.size()) {
 		cout << "num_bkps is bigger than cost_matrix.size()" << endl;
@@ -281,7 +282,7 @@ vector<int> dupinalgo::return_breakpoints() {
 		end = end - min_size;
 		little_k--;
 	}
-	opt_bkps.push_back(num_timesteps - 1);
+	std::reverse(opt_bkps.begin(), opt_bkps.end());
 	return opt_bkps;
 }
 
