@@ -20,6 +20,7 @@ public:
     int min_size;
     std::vector<std::vector<double>> datum;
     std::vector<std::vector<double>> cost_matrix;
+ 
 
     struct linear_fit_struct {
         std::vector<std::vector<double>> y;

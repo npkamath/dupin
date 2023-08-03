@@ -34,6 +34,7 @@ void dupinalgo::read_input() {
 			datum[i][j] = temp;
 		}
 	}
+	
 }
 
 void dupinalgo::readinputpybind() {
@@ -48,6 +49,7 @@ void dupinalgo::regression_setup(linear_fit_struct &lfit) {
 	//normalize timestep vecotr
 	for (int i = 0; i < num_timesteps; ++i) {
 		lfit.x[i] = static_cast<double>(i) / (num_timesteps - 1) * 1.0;
+		cout << lfit.x[i] << " timestep check ";
 	}
 	lfit.y = datum;
 }
@@ -55,7 +57,7 @@ void dupinalgo::regression_setup(linear_fit_struct &lfit) {
 vector<double> dupinalgo::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
 	vector<double> line;
 	int n = end - start;
-	cout << "Dimension: " << dim << "\n";
+	// cout << "Dimension: " << dim << "\n";
 	double current_x = 0.0;
 	double current_y = 0.0;
 	for (int i = start; i < end; ++i) {
@@ -67,8 +69,8 @@ vector<double> dupinalgo::regressionline(int start, int end, int dim, linear_fit
 		lfit.sum_xy += current_x * current_y;
 		lfit.sum_xx += current_x * current_x;
 	}
-	cout <<"sum check: "<< " x: "<< lfit.sum_x << " y: " << lfit.sum_y
-		<< " xy: " << lfit.sum_xy << " xx: " << lfit.sum_xx << "\n";
+	// cout <<"sum check: "<< " x: "<< lfit.sum_x << " y: " << lfit.sum_y
+	// 	<< " xy: " << lfit.sum_xy << " xx: " << lfit.sum_xx << "\n";
 	double denom = (n * lfit.sum_xx - (lfit.sum_x * lfit.sum_x)); 
 	double m = 0.0;
 	double b = 0.0;
@@ -82,7 +84,7 @@ vector<double> dupinalgo::regressionline(int start, int end, int dim, linear_fit
 	for (int i = start; i < end; i++) {
 		double x = lfit.x[i];
 		double y = m * x + b;
-		cout <<"Line: " << y << " = " << m << " * " << x << " + " << b << endl;
+	// 	cout <<"Line: " << y << " = " << m << " * " << x << " + " << b << endl;
 		line.push_back(y);
 	}
 	return line;
@@ -118,7 +120,7 @@ vector <vector <double>>  dupinalgo::predicted(int start, int end, linear_fit_st
 	vector<vector<double>> predicted_y(num_timesteps, vector<double>(num_parameters));
 	
 	for (int i = 0; i < num_parameters; i++) {
-		cout << "Calling regressionline on paramater: " << i << "\n";
+	//	cout << "Calling regressionline on paramater: " << i << "\n";
 		vector<double> line = regressionline(start, end, i, lfit);
 		for (int j = start; j < end; j++) {
 			predicted_y[j][i] = line[j - start];
@@ -146,10 +148,10 @@ double dupinalgo::cost_function(int start, int end) {
 	// Compute and return the L2 cost
 	double final_cost = l2_cost(predicted_y, start, end);
 	if (!swapped) {
-		cout << "Final Cost for " << start << " " << end << " is " << final_cost << endl << endl;
+		//cout << "Final Cost for " << start << " " << end << " is " << final_cost << endl << endl;
 	}
 	else {
-		cout << "Final Cost for " << end << " " << start << " is " << final_cost << endl << endl;
+		//cout << "Final Cost for " << end << " " << start << " is " << final_cost << endl << endl;
 	}
 	return final_cost;
 }
@@ -160,9 +162,9 @@ vector<vector<double>> dupinalgo::initialize_cost_matrix(vector<vector<double>>&
 
 	cost_matrix.resize(num_timesteps, vector<double>(num_timesteps, 0.0));// only fill out half the matrix
 	for (int i = 0; i < num_timesteps; i++) {
-		for (int j = 0; j < num_timesteps; j++) {
+		for (int j = i + min_size; j < num_timesteps; j++) {
 
-			cout << "checking distance between " << i << " " << j<<endl; 
+			//cout << "checking distance between " << i << " " << j<<endl; 
 			cost_matrix[i][j] = cost_function(i, j); //fix to i and j
 		}
 	}
@@ -171,82 +173,119 @@ vector<vector<double>> dupinalgo::initialize_cost_matrix(vector<vector<double>>&
 }
 vector<int> dupinalgo::admissible_bkps(int start, int end, int num_bkps) {
 	vector <int> list;
-	int num_samples;
-	for (int i = start; i < end; i = i + 1) {
-		num_samples = i - start;
-		int diff = end - i;
-		if (diff >= min_size){
+	cout << "admissible bkps for " << start << " to " << end << endl;
+	for (int i = start + min_size; i < end; i = i + 1) {
+		int left_samples = i - start;
+		int right_samples = end - i;
+		if (left_samples >= min_size - 1 && right_samples >= min_size - 1 && i % jump == 0) {
 			list.push_back(i);
+			cout << i << " ";
 		}
 	}
+	cout << endl;
 	return list;
-
 }
 
-unordered_map<int, unordered_map<int, double>> memo; //think about using 2d vector/array here//1d vector
+//think about using 2d vector/array here//1d vector
 //top down recursive implementation
 double dupinalgo::seg(int start, int end, int num_bkps) {
 	//recurrence to find the optimal partition
 	double cost;
 	vector<int> goodbkps;
 	if (num_bkps == 0) {
-		cost = cost_matrix[start][end];
-		return cost;
+		if (end - start > 2) {
+			cost = cost_matrix[start][end];
+			return cost;
+		}
+		else {
+			return std::numeric_limits<double>::infinity();
+		}
 	}
 	if (memo.count(start) && memo[start].count(end)) {
 		return memo[start][end];
 	}
 	else {
-		vector<int> goodbkps = admissible_bkps(start, end, num_bkps);
+		goodbkps = admissible_bkps(start, end, num_bkps);
+		
 
-		unordered_map<int, double> subproblems;
 
-		for (auto& bkp : goodbkps) {
-			double left_partition = seg(start, bkp, num_bkps - 1);
-			double right_partition = seg(bkp, end, 0);
-			double tmp_partition = left_partition + right_partition;
-			subproblems[bkp] = tmp_partition;
+			unordered_map<int, double> subproblems;
+
+			for (auto& bkp : goodbkps) {
+				double left_partition = seg(start, bkp, num_bkps - 1);
+				double right_partition = seg(bkp, end, 0);
+				double tmp_partition = left_partition + right_partition;
+				subproblems[bkp] = tmp_partition;
+			}
+			double min_cost = std::numeric_limits<double>::infinity();
+
+			for (auto it = subproblems.begin(); it != subproblems.end(); it++) {
+				min_cost = min(min_cost, it->second);
+			}
+			memo[start][end] = min_cost;
+			return min_cost;
 		}
-		double min_cost = std::numeric_limits<double>::infinity();
 
-		for (auto it = subproblems.begin(); it != subproblems.end(); it++) {
-			min_cost = min(min_cost, it->second);
-		}
-		memo[start][end] = min_cost;
-		return min_cost;
-	}
+	
 }
 
 //Now.. return the breakpoints with a while loop !
 vector<int> dupinalgo::return_breakpoints() {
 	vector<int> opt_bkps;
-	opt_bkps.reserve(num_bkps);
-	
+	opt_bkps.reserve(num_bkps + 1);
+
+	if (num_bkps > cost_matrix.size()) {
+		cout << "num_bkps is bigger than cost_matrix.size()" << endl;
+		return opt_bkps; // or throw an exception
+	}
+
 	int little_k = num_bkps;
-	
 	int start = 0;
+	int end = num_timesteps - 1;
+
 	while (little_k > 0) {
-		int optimal_bkp = start;
-		int end = num_timesteps - little_k;
+		cout << " little k: " << little_k << "\n" << "_________________\n";
+		int optimal_bkp = -1;
+	
+
+		if (end >= cost_matrix.size()) {
+			cout << "end index is out of range: end=" << end << ", cost_matrix.size()=" << cost_matrix.size() << endl;
+			return opt_bkps; // or throw an exception
+		}
+
+
+		vector<int> goodbkps = admissible_bkps(start, end, num_bkps);
+		std::reverse(goodbkps.begin(), goodbkps.end()); 
 		double min_cost = std::numeric_limits<double>::infinity();
-		for (int i = start; i <= end; i += 1) {
-			double left_partition = seg(start, i, num_bkps - 1);
-			double right_partition = seg(i, end , 0);
-			double total_partition = left_partition + right_partition;
-			if (total_partition < min_cost) {
-				min_cost = total_partition;
-				optimal_bkp = i;
-				cout << optimal_bkp << " i: " << i << " end: " << end << endl;
+		for (auto& bkp : goodbkps) {
+			
+			double total_cost = seg(start, bkp, little_k - 1) + cost_matrix[bkp][end];
+			cout << "current min_cost is " << min_cost << " total cost for " <<bkp<< ": "<< total_cost<<endl;
+			if (total_cost < min_cost) {
+				min_cost = total_cost;
+				optimal_bkp = bkp;
+				cout << bkp << " is an optimal breakpoint with a cost of "<< total_cost << endl;
+			}
+			
+			else {
+				cout << bkp << " is not an optimal breakpoint with a cost of " << total_cost<<  endl; 
 			}
 		}
+
+		if (optimal_bkp == -1) {
+			little_k--;
+			continue;
+		}
+
 		opt_bkps.push_back(optimal_bkp);
-		start = optimal_bkp;
+		end = end - min_size;
 		little_k--;
 	}
-	opt_bkps.push_back(num_timesteps);
-//	std::reverse(opt_bkps.begin(), opt_bkps.end());
+	opt_bkps.push_back(num_timesteps - 1);
 	return opt_bkps;
 }
+
+
 
 vector<int> dupinalgo::getTopDownBreakpoints() {
 	return dupinalgo::return_breakpoints();
@@ -299,14 +338,20 @@ int main() {
 		}
 		cout << endl;
 	}
+	cout << "num_bkps: " << dupin.num_bkps << "\n";
+	cout << "num_parameters: " << dupin.num_parameters << "\n";
+	cout << "num_timesteps: " << dupin.num_timesteps << "\n";
+	cout << "jump: " << dupin.jump << "\n";
+	cout << "min_size: " << dupin.min_size << "\n";
+
 	dupin.initialize_cost_matrix(dupin.datum);
 	cout << "Validating cost matrix: \n";
 	for (int i = 1; i <= dupin.num_timesteps; i++) {
-		cout << setw(12) << i << " ";
+		cout << setw(12) << i - 1 << " ";
 	}
 	cout << endl;
 	for (int i = 0; i < dupin.num_timesteps; i++) {
-		cout << i + 1 << " ";
+		cout << i  << " ";
 		for (int j = 0; j < dupin.num_timesteps; j++) {
 			cout << setw(12)<< setprecision(8)<< dupin.cost_matrix[i][j] << "|";
 		}
@@ -315,8 +360,8 @@ int main() {
 //test top down
 	auto breakponts = dupin.getTopDownBreakpoints();
 	cout << "top down results: ";
-	for (int i = 0; i <= dupin.num_bkps; i++) {
-		cout << breakponts[i] << " "; 
+	for (auto &i : breakponts) {
+		cout << i << " "; 
 	}
 	
 	//initialize_cost_matrix(datum);

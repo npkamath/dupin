@@ -2,750 +2,92 @@ Validating input:
 1 
 2 
 3 
--4 
--5 
--6 
-2 
-3 
 4 
-checking distance between 0 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 0 0 is 0
-
-checking distance between 0 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 1 xy: 0 xx: 0
-Line: 1 = 0 * 0 + 1
-Final Cost for 0 1 is 0
-
-checking distance between 0 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.125 y: 3 xy: 0.25 xx: 0.015625
-Line: 1 = 8 * 0 + 1
-Line: 2 = 8 * 0.125 + 1
-Final Cost for 0 2 is 0
-
-checking distance between 0 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: 6 xy: 1 xx: 0.078125
-Line: 1 = 8 * 0 + 1
-Line: 2 = 8 * 0.125 + 1
-Line: 3 = 8 * 0.25 + 1
-Final Cost for 0 3 is 0
-
-checking distance between 0 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 2 xy: -0.5 xx: 0.21875
-Line: 2.6 = -11.2 * 0 + 2.6
-Line: 1.2 = -11.2 * 0.125 + 2.6
-Line: -0.2 = -11.2 * 0.25 + 2.6
-Line: -1.6 = -11.2 * 0.375 + 2.6
-Final Cost for 0 4 is 4.38178
-
-checking distance between 0 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.25 y: -3 xy: -3 xx: 0.46875
-Line: 3 = -14.4 * 0 + 3
-Line: 1.2 = -14.4 * 0.125 + 3
-Line: -0.6 = -14.4 * 0.25 + 3
-Line: -2.4 = -14.4 * 0.375 + 3
-Line: -4.2 = -14.4 * 0.5 + 3
-Final Cost for 0 5 is 4.5607
-
-checking distance between 0 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -9 xy: -6.75 xx: 0.859375
-Line: 3 = -14.4 * 0 + 3
-Line: 1.2 = -14.4 * 0.125 + 3
-Line: -0.6 = -14.4 * 0.25 + 3
-Line: -2.4 = -14.4 * 0.375 + 3
-Line: -4.2 = -14.4 * 0.5 + 3
-Line: -6 = -14.4 * 0.625 + 3
-Final Cost for 0 6 is 4.5607
-
-checking distance between 0 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.625 y: -7 xy: -5.25 xx: 1.42188
-Line: 1.25 = -6 * 0 + 1.25
-Line: 0.5 = -6 * 0.125 + 1.25
-Line: -0.25 = -6 * 0.25 + 1.25
-Line: -1 = -6 * 0.375 + 1.25
-Line: -1.75 = -6 * 0.5 + 1.25
-Line: -2.5 = -6 * 0.625 + 1.25
-Line: -3.25 = -6 * 0.75 + 1.25
-Final Cost for 0 7 is 8.5
-
-checking distance between 0 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.5 y: -4 xy: -2.625 xx: 2.1875
-Line: 0.0833333 = -1.33333 * 0 + 0.0833333
-Line: -0.0833333 = -1.33333 * 0.125 + 0.0833333
-Line: -0.25 = -1.33333 * 0.25 + 0.0833333
-Line: -0.416667 = -1.33333 * 0.375 + 0.0833333
-Line: -0.583333 = -1.33333 * 0.5 + 0.0833333
-Line: -0.75 = -1.33333 * 0.625 + 0.0833333
-Line: -0.916667 = -1.33333 * 0.75 + 0.0833333
-Line: -1.08333 = -1.33333 * 0.875 + 0.0833333
-Final Cost for 0 8 is 10.0416
-
-checking distance between 1 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 1 xy: 0 xx: 0
-Line: 1 = 0 * 0 + 1
-Final Cost for 1 0 is 0
-
-checking distance between 1 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 1 1 is 0
-
-checking distance between 1 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.125 y: 2 xy: 0.25 xx: 0.015625
-Line: 2 = 0 * 0.125 + 2
-Final Cost for 1 2 is 0
-
-checking distance between 1 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: 5 xy: 1 xx: 0.078125
-Line: 2 = 8 * 0.125 + 1
-Line: 3 = 8 * 0.25 + 1
-Final Cost for 1 3 is 0
-
-checking distance between 1 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 1 xy: -0.5 xx: 0.21875
-Line: 3.33333 = -24 * 0.125 + 6.33333
-Line: 0.333333 = -24 * 0.25 + 6.33333
-Line: -2.66667 = -24 * 0.375 + 6.33333
-Final Cost for 1 4 is 3.26599
-
-checking distance between 1 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.25 y: -4 xy: -3 xx: 0.46875
-Line: 3.2 = -22.4 * 0.125 + 6
-Line: 0.4 = -22.4 * 0.25 + 6
-Line: -2.4 = -22.4 * 0.375 + 6
-Line: -5.2 = -22.4 * 0.5 + 6
-Final Cost for 1 5 is 3.28634
-
-checking distance between 1 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -10 xy: -6.75 xx: 0.859375
-Line: 2.8 = -19.2 * 0.125 + 5.2
-Line: 0.4 = -19.2 * 0.25 + 5.2
-Line: -2 = -19.2 * 0.375 + 5.2
-Line: -4.4 = -19.2 * 0.5 + 5.2
-Line: -6.8 = -19.2 * 0.625 + 5.2
-Final Cost for 1 6 is 3.52136
-
-checking distance between 1 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.625 y: -8 xy: -5.25 xx: 1.42188
-Line: 0.666667 = -6.4 * 0.125 + 1.46667
-Line: -0.133333 = -6.4 * 0.25 + 1.46667
-Line: -0.933333 = -6.4 * 0.375 + 1.46667
-Line: -1.73333 = -6.4 * 0.5 + 1.46667
-Line: -2.53333 = -6.4 * 0.625 + 1.46667
-Line: -3.33333 = -6.4 * 0.75 + 1.46667
-Final Cost for 1 7 is 8.49313
-
-checking distance between 1 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.5 y: -5 xy: -2.625 xx: 2.1875
-Line: -0.607143 = -0.285714 * 0.125 + -0.571429
-Line: -0.642857 = -0.285714 * 0.25 + -0.571429
-Line: -0.678571 = -0.285714 * 0.375 + -0.571429
-Line: -0.714286 = -0.285714 * 0.5 + -0.571429
-Line: -0.75 = -0.285714 * 0.625 + -0.571429
-Line: -0.785714 = -0.285714 * 0.75 + -0.571429
-Line: -0.821429 = -0.285714 * 0.875 + -0.571429
-Final Cost for 1 8 is 9.9696
-
-checking distance between 2 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.125 y: 3 xy: 0.25 xx: 0.015625
-Line: 1 = 8 * 0 + 1
-Line: 2 = 8 * 0.125 + 1
-Final Cost for 2 0 is 0
-
-checking distance between 2 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.125 y: 2 xy: 0.25 xx: 0.015625
-Line: 2 = 0 * 0.125 + 2
-Final Cost for 2 1 is 0
-
-checking distance between 2 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 2 2 is 0
-
-checking distance between 2 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.25 y: 3 xy: 0.75 xx: 0.0625
-Line: 3 = 0 * 0.25 + 3
-Final Cost for 2 3 is 0
-
-checking distance between 2 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.625 y: -1 xy: -0.75 xx: 0.203125
-Line: 3 = -56 * 0.25 + 17
-Line: -4 = -56 * 0.375 + 17
-Final Cost for 2 4 is 0
-
-checking distance between 2 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.125 y: -6 xy: -3.25 xx: 0.453125
-Line: 2 = -32 * 0.25 + 10
-Line: -2 = -32 * 0.375 + 10
-Line: -6 = -32 * 0.5 + 10
-Final Cost for 2 5 is 2.44949
-
-checking distance between 2 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.75 y: -12 xy: -7 xx: 0.84375
-Line: 1.2 = -22.4 * 0.25 + 6.8
-Line: -1.6 = -22.4 * 0.375 + 6.8
-Line: -4.4 = -22.4 * 0.5 + 6.8
-Line: -7.2 = -22.4 * 0.625 + 6.8
-Final Cost for 2 6 is 3.28634
-
-checking distance between 2 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.5 y: -10 xy: -5.5 xx: 1.40625
-Line: -1.2 = -3.2 * 0.25 + -0.4
-Line: -1.6 = -3.2 * 0.375 + -0.4
-Line: -2 = -3.2 * 0.5 + -0.4
-Line: -2.4 = -3.2 * 0.625 + -0.4
-Line: -2.8 = -3.2 * 0.75 + -0.4
-Final Cost for 2 7 is 8.27043
-
-checking distance between 2 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.375 y: -7 xy: -2.875 xx: 2.17188
-Line: -2.38095 = 3.88571 * 0.25 + -3.35238
-Line: -1.89524 = 3.88571 * 0.375 + -3.35238
-Line: -1.40952 = 3.88571 * 0.5 + -3.35238
-Line: -0.92381 = 3.88571 * 0.625 + -3.35238
-Line: -0.438095 = 3.88571 * 0.75 + -3.35238
-Line: 0.047619 = 3.88571 * 0.875 + -3.35238
-Final Cost for 2 8 is 9.31154
-
-checking distance between 3 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: 6 xy: 1 xx: 0.078125
-Line: 1 = 8 * 0 + 1
-Line: 2 = 8 * 0.125 + 1
-Line: 3 = 8 * 0.25 + 1
-Final Cost for 3 0 is 0
-
-checking distance between 3 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: 5 xy: 1 xx: 0.078125
-Line: 2 = 8 * 0.125 + 1
-Line: 3 = 8 * 0.25 + 1
-Final Cost for 3 1 is 0
-
-checking distance between 3 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.25 y: 3 xy: 0.75 xx: 0.0625
-Line: 3 = 0 * 0.25 + 3
-Final Cost for 3 2 is 0
-
-checking distance between 3 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 3 3 is 0
-
-checking distance between 3 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: -4 xy: -1.5 xx: 0.140625
-Line: -4 = 0 * 0.375 + -4
-Final Cost for 3 4 is 0
-
-checking distance between 3 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.875 y: -9 xy: -4 xx: 0.390625
-Line: -4 = -8 * 0.375 + -1
-Line: -5 = -8 * 0.5 + -1
-Final Cost for 3 5 is 0
-
-checking distance between 3 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.5 y: -15 xy: -7.75 xx: 0.78125
-Line: -4 = -8 * 0.375 + -1
-Line: -5 = -8 * 0.5 + -1
-Line: -6 = -8 * 0.625 + -1
-Final Cost for 3 6 is 0
-
-checking distance between 3 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.25 y: -13 xy: -6.25 xx: 1.34375
-Line: -5.8 = 13.6 * 0.375 + -10.9
-Line: -4.1 = 13.6 * 0.5 + -10.9
-Line: -2.4 = 13.6 * 0.625 + -10.9
-Line: -0.7 = 13.6 * 0.75 + -10.9
-Final Cost for 3 7 is 4.9295
-
-checking distance between 3 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.125 y: -10 xy: -3.625 xx: 2.10938
-Line: -6.2 = 16.8 * 0.375 + -12.5
-Line: -4.1 = 16.8 * 0.5 + -12.5
-Line: -2 = 16.8 * 0.625 + -12.5
-Line: 0.1 = 16.8 * 0.75 + -12.5
-Line: 2.2 = 16.8 * 0.875 + -12.5
-Final Cost for 3 8 is 5.0892
-
-checking distance between 4 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 2 xy: -0.5 xx: 0.21875
-Line: 2.6 = -11.2 * 0 + 2.6
-Line: 1.2 = -11.2 * 0.125 + 2.6
-Line: -0.2 = -11.2 * 0.25 + 2.6
-Line: -1.6 = -11.2 * 0.375 + 2.6
-Final Cost for 4 0 is 4.38178
-
-checking distance between 4 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 1 xy: -0.5 xx: 0.21875
-Line: 3.33333 = -24 * 0.125 + 6.33333
-Line: 0.333333 = -24 * 0.25 + 6.33333
-Line: -2.66667 = -24 * 0.375 + 6.33333
-Final Cost for 4 1 is 3.26599
-
-checking distance between 4 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.625 y: -1 xy: -0.75 xx: 0.203125
-Line: 3 = -56 * 0.25 + 17
-Line: -4 = -56 * 0.375 + 17
-Final Cost for 4 2 is 0
-
-checking distance between 4 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.375 y: -4 xy: -1.5 xx: 0.140625
-Line: -4 = 0 * 0.375 + -4
-Final Cost for 4 3 is 0
-
-checking distance between 4 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 4 4 is 0
-
-checking distance between 4 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.5 y: -5 xy: -2.5 xx: 0.25
-Line: -5 = 0 * 0.5 + -5
-Final Cost for 4 5 is 0
-
-checking distance between 4 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.125 y: -11 xy: -6.25 xx: 0.640625
-Line: -5 = -8 * 0.5 + -1
-Line: -6 = -8 * 0.625 + -1
-Final Cost for 4 6 is 0
-
-checking distance between 4 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -9 xy: -4.75 xx: 1.20312
-Line: -6.5 = 28 * 0.5 + -20.5
-Line: -3 = 28 * 0.625 + -20.5
-Line: 0.5 = 28 * 0.75 + -20.5
-Final Cost for 4 7 is 3.67423
-
-checking distance between 4 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.75 y: -6 xy: -2.125 xx: 1.96875
-Line: -6.3 = 25.6 * 0.5 + -19.1
-Line: -3.1 = 25.6 * 0.625 + -19.1
-Line: 0.1 = 25.6 * 0.75 + -19.1
-Line: 3.3 = 25.6 * 0.875 + -19.1
-Final Cost for 4 8 is 3.71484
-
-checking distance between 5 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.25 y: -3 xy: -3 xx: 0.46875
-Line: 3 = -14.4 * 0 + 3
-Line: 1.2 = -14.4 * 0.125 + 3
-Line: -0.6 = -14.4 * 0.25 + 3
-Line: -2.4 = -14.4 * 0.375 + 3
-Line: -4.2 = -14.4 * 0.5 + 3
-Final Cost for 5 0 is 4.5607
-
-checking distance between 5 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.25 y: -4 xy: -3 xx: 0.46875
-Line: 3.2 = -22.4 * 0.125 + 6
-Line: 0.4 = -22.4 * 0.25 + 6
-Line: -2.4 = -22.4 * 0.375 + 6
-Line: -5.2 = -22.4 * 0.5 + 6
-Final Cost for 5 1 is 3.28634
-
-checking distance between 5 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.125 y: -6 xy: -3.25 xx: 0.453125
-Line: 2 = -32 * 0.25 + 10
-Line: -2 = -32 * 0.375 + 10
-Line: -6 = -32 * 0.5 + 10
-Final Cost for 5 2 is 2.44949
-
-checking distance between 5 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.875 y: -9 xy: -4 xx: 0.390625
-Line: -4 = -8 * 0.375 + -1
-Line: -5 = -8 * 0.5 + -1
-Final Cost for 5 3 is 0
-
-checking distance between 5 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.5 y: -5 xy: -2.5 xx: 0.25
-Line: -5 = 0 * 0.5 + -5
-Final Cost for 5 4 is 0
-
-checking distance between 5 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 5 5 is 0
-
-checking distance between 5 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.625 y: -6 xy: -3.75 xx: 0.390625
-Line: -6 = 0 * 0.625 + -6
-Final Cost for 5 6 is 0
-
-checking distance between 5 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.375 y: -4 xy: -2.25 xx: 0.953125
-Line: -6 = 64 * 0.625 + -46
-Line: 2 = 64 * 0.75 + -46
-Final Cost for 5 7 is 0
-
-checking distance between 5 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.25 y: -1 xy: 0.375 xx: 1.71875
-Line: -4.83333 = 36 * 0.625 + -27.3333
-Line: -0.333333 = 36 * 0.75 + -27.3333
-Line: 4.16667 = 36 * 0.875 + -27.3333
-Final Cost for 5 8 is 2.85774
-
-checking distance between 6 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -9 xy: -6.75 xx: 0.859375
-Line: 3 = -14.4 * 0 + 3
-Line: 1.2 = -14.4 * 0.125 + 3
-Line: -0.6 = -14.4 * 0.25 + 3
-Line: -2.4 = -14.4 * 0.375 + 3
-Line: -4.2 = -14.4 * 0.5 + 3
-Line: -6 = -14.4 * 0.625 + 3
-Final Cost for 6 0 is 4.5607
-
-checking distance between 6 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -10 xy: -6.75 xx: 0.859375
-Line: 2.8 = -19.2 * 0.125 + 5.2
-Line: 0.4 = -19.2 * 0.25 + 5.2
-Line: -2 = -19.2 * 0.375 + 5.2
-Line: -4.4 = -19.2 * 0.5 + 5.2
-Line: -6.8 = -19.2 * 0.625 + 5.2
-Final Cost for 6 1 is 3.52136
-
-checking distance between 6 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.75 y: -12 xy: -7 xx: 0.84375
-Line: 1.2 = -22.4 * 0.25 + 6.8
-Line: -1.6 = -22.4 * 0.375 + 6.8
-Line: -4.4 = -22.4 * 0.5 + 6.8
-Line: -7.2 = -22.4 * 0.625 + 6.8
-Final Cost for 6 2 is 3.28634
-
-checking distance between 6 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.5 y: -15 xy: -7.75 xx: 0.78125
-Line: -4 = -8 * 0.375 + -1
-Line: -5 = -8 * 0.5 + -1
-Line: -6 = -8 * 0.625 + -1
-Final Cost for 6 3 is 0
-
-checking distance between 6 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.125 y: -11 xy: -6.25 xx: 0.640625
-Line: -5 = -8 * 0.5 + -1
-Line: -6 = -8 * 0.625 + -1
-Final Cost for 6 4 is 0
-
-checking distance between 6 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.625 y: -6 xy: -3.75 xx: 0.390625
-Line: -6 = 0 * 0.625 + -6
-Final Cost for 6 5 is 0
-
-checking distance between 6 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 6 6 is 0
-
-checking distance between 6 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 2 xy: 1.5 xx: 0.5625
-Line: 2 = 0 * 0.75 + 2
-Final Cost for 6 7 is 0
-
-checking distance between 6 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.625 y: 5 xy: 4.125 xx: 1.32812
-Line: 2 = 8 * 0.75 + -4
-Line: 3 = 8 * 0.875 + -4
-Final Cost for 6 8 is 0
-
-checking distance between 7 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.625 y: -7 xy: -5.25 xx: 1.42188
-Line: 1.25 = -6 * 0 + 1.25
-Line: 0.5 = -6 * 0.125 + 1.25
-Line: -0.25 = -6 * 0.25 + 1.25
-Line: -1 = -6 * 0.375 + 1.25
-Line: -1.75 = -6 * 0.5 + 1.25
-Line: -2.5 = -6 * 0.625 + 1.25
-Line: -3.25 = -6 * 0.75 + 1.25
-Final Cost for 7 0 is 8.5
-
-checking distance between 7 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.625 y: -8 xy: -5.25 xx: 1.42188
-Line: 0.666667 = -6.4 * 0.125 + 1.46667
-Line: -0.133333 = -6.4 * 0.25 + 1.46667
-Line: -0.933333 = -6.4 * 0.375 + 1.46667
-Line: -1.73333 = -6.4 * 0.5 + 1.46667
-Line: -2.53333 = -6.4 * 0.625 + 1.46667
-Line: -3.33333 = -6.4 * 0.75 + 1.46667
-Final Cost for 7 1 is 8.49313
-
-checking distance between 7 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.5 y: -10 xy: -5.5 xx: 1.40625
-Line: -1.2 = -3.2 * 0.25 + -0.4
-Line: -1.6 = -3.2 * 0.375 + -0.4
-Line: -2 = -3.2 * 0.5 + -0.4
-Line: -2.4 = -3.2 * 0.625 + -0.4
-Line: -2.8 = -3.2 * 0.75 + -0.4
-Final Cost for 7 2 is 8.27043
-
-checking distance between 7 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.25 y: -13 xy: -6.25 xx: 1.34375
-Line: -5.8 = 13.6 * 0.375 + -10.9
-Line: -4.1 = 13.6 * 0.5 + -10.9
-Line: -2.4 = 13.6 * 0.625 + -10.9
-Line: -0.7 = 13.6 * 0.75 + -10.9
-Final Cost for 7 3 is 4.9295
-
-checking distance between 7 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.875 y: -9 xy: -4.75 xx: 1.20312
-Line: -6.5 = 28 * 0.5 + -20.5
-Line: -3 = 28 * 0.625 + -20.5
-Line: 0.5 = 28 * 0.75 + -20.5
-Final Cost for 7 4 is 3.67423
-
-checking distance between 7 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.375 y: -4 xy: -2.25 xx: 0.953125
-Line: -6 = 64 * 0.625 + -46
-Line: 2 = 64 * 0.75 + -46
-Final Cost for 7 5 is 0
-
-checking distance between 7 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.75 y: 2 xy: 1.5 xx: 0.5625
-Line: 2 = 0 * 0.75 + 2
-Final Cost for 7 6 is 0
-
-checking distance between 7 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 7 7 is 0
-
-checking distance between 7 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.875 y: 3 xy: 2.625 xx: 0.765625
-Line: 3 = 0 * 0.875 + 3
-Final Cost for 7 8 is 0
-
-checking distance between 8 0
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.5 y: -4 xy: -2.625 xx: 2.1875
-Line: 0.0833333 = -1.33333 * 0 + 0.0833333
-Line: -0.0833333 = -1.33333 * 0.125 + 0.0833333
-Line: -0.25 = -1.33333 * 0.25 + 0.0833333
-Line: -0.416667 = -1.33333 * 0.375 + 0.0833333
-Line: -0.583333 = -1.33333 * 0.5 + 0.0833333
-Line: -0.75 = -1.33333 * 0.625 + 0.0833333
-Line: -0.916667 = -1.33333 * 0.75 + 0.0833333
-Line: -1.08333 = -1.33333 * 0.875 + 0.0833333
-Final Cost for 8 0 is 10.0416
-
-checking distance between 8 1
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.5 y: -5 xy: -2.625 xx: 2.1875
-Line: -0.607143 = -0.285714 * 0.125 + -0.571429
-Line: -0.642857 = -0.285714 * 0.25 + -0.571429
-Line: -0.678571 = -0.285714 * 0.375 + -0.571429
-Line: -0.714286 = -0.285714 * 0.5 + -0.571429
-Line: -0.75 = -0.285714 * 0.625 + -0.571429
-Line: -0.785714 = -0.285714 * 0.75 + -0.571429
-Line: -0.821429 = -0.285714 * 0.875 + -0.571429
-Final Cost for 8 1 is 9.9696
-
-checking distance between 8 2
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.375 y: -7 xy: -2.875 xx: 2.17188
-Line: -2.38095 = 3.88571 * 0.25 + -3.35238
-Line: -1.89524 = 3.88571 * 0.375 + -3.35238
-Line: -1.40952 = 3.88571 * 0.5 + -3.35238
-Line: -0.92381 = 3.88571 * 0.625 + -3.35238
-Line: -0.438095 = 3.88571 * 0.75 + -3.35238
-Line: 0.047619 = 3.88571 * 0.875 + -3.35238
-Final Cost for 8 2 is 9.31154
-
-checking distance between 8 3
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 3.125 y: -10 xy: -3.625 xx: 2.10938
-Line: -6.2 = 16.8 * 0.375 + -12.5
-Line: -4.1 = 16.8 * 0.5 + -12.5
-Line: -2 = 16.8 * 0.625 + -12.5
-Line: 0.1 = 16.8 * 0.75 + -12.5
-Line: 2.2 = 16.8 * 0.875 + -12.5
-Final Cost for 8 3 is 5.0892
-
-checking distance between 8 4
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.75 y: -6 xy: -2.125 xx: 1.96875
-Line: -6.3 = 25.6 * 0.5 + -19.1
-Line: -3.1 = 25.6 * 0.625 + -19.1
-Line: 0.1 = 25.6 * 0.75 + -19.1
-Line: 3.3 = 25.6 * 0.875 + -19.1
-Final Cost for 8 4 is 3.71484
-
-checking distance between 8 5
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 2.25 y: -1 xy: 0.375 xx: 1.71875
-Line: -4.83333 = 36 * 0.625 + -27.3333
-Line: -0.333333 = 36 * 0.75 + -27.3333
-Line: 4.16667 = 36 * 0.875 + -27.3333
-Final Cost for 8 5 is 2.85774
-
-checking distance between 8 6
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 1.625 y: 5 xy: 4.125 xx: 1.32812
-Line: 2 = 8 * 0.75 + -4
-Line: 3 = 8 * 0.875 + -4
-Final Cost for 8 6 is 0
-
-checking distance between 8 7
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0.875 y: 3 xy: 2.625 xx: 0.765625
-Line: 3 = 0 * 0.875 + 3
-Final Cost for 8 7 is 0
-
-checking distance between 8 8
-Calling regressionline on paramater: 0
-Dimension: 0
-sum check:  x: 0 y: 0 xy: 0 xx: 0
-Final Cost for 8 8 is 0
-
-Validating cost matrix: 
-           1            2            3            4            5            6            7            8            9 
-1            0|           0|           0|           0|   4.3817805|   4.5607017|   4.5607017|         8.5|    10.04158|
-2            0|           0|           0|           0|   3.2659863|   3.2863353|   3.5213634|   8.4931345|   9.9695966|
-3            0|           0|           0|           0|           0|   2.4494897|   3.2863353|   8.2704293|   9.3115392|
-4            0|           0|           0|           0|           0|           0|           0|    4.929503|   5.0892043|
-5    4.3817805|   3.2659863|           0|           0|           0|           0|           0|   3.6742346|   3.7148351|
-6    4.5607017|   3.2863353|   2.4494897|           0|           0|           0|           0|           0|    2.857738|
-7    4.5607017|   3.5213634|   3.2863353|           0|           0|           0|           0|           0|           0|
-8          8.5|   8.4931345|   8.2704293|    4.929503|   3.6742346|           0|           0|           0|           0|
-9     10.04158|   9.9695966|   9.3115392|   5.0892043|   3.7148351|    2.857738|           0|           0|           0|
-3 i: 3 end: 7
-5 i: 5 end: 7
-6 i: 6 end: 7
-top down results: 6 6 9 
+-40 
+-45 
+-50 
+100 
+101 
+103 
+-300 
+-301 
+-302 
+num_bkps: 3
+num_parameters: 1
+num_timesteps: 13
+jump: 1
+min_size: 3
+0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check 0 timestep check 0.0833333 timestep check 0.166667 timestep check 0.25 timestep check 0.333333 timestep check 0.416667 timestep check 0.5 timestep check 0.583333 timestep check 0.666667 timestep check 0.75 timestep check 0.833333 timestep check 0.916667 timestep check 1 timestep check Validating cost matrix: 
+           0            1            2            3            4            5            6            7            8            9           10           11           12 
+0            0|           0|           0|2.220446e-16|1.110223e-15|   28.460499|   30.284367|   30.319725|   125.37776|   144.47216|   149.95005|   349.40358|    410.1967|
+1            0|           0|           0|           0|6.2803698e-16|   24.647515|   24.937923|   25.314028|   123.96529|   139.88503|   143.30697|     348.838|   405.98758|
+2            0|           0|           0|           0|           0|   18.371173|   19.021041|   21.695622|   120.72574|   132.27893|   133.60354|   348.25636|   401.33785|
+3            0|           0|           0|           0|           0|           0|   15.921683|    21.36118|   112.41174|   118.12665|   118.13068|    347.6831|   396.23403|
+4            0|           0|           0|           0|           0|           0|           0|2.0097183e-14|   84.896996|   84.981763|   88.996736|   347.16438|   390.71653|
+5            0|           0|           0|           0|           0|           0|           0|           0|   63.278485|   68.042634|   81.350476|    338.3281|   369.90959|
+6            0|           0|           0|           0|           0|           0|           0|           0|           0|   60.828995|   81.246538|   313.34629|   328.45503|
+7            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|  0.40824829|   221.46286|   221.46851|
+8            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|   165.34056|   180.45692|
+9            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|   164.11581|
+10            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|
+11            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|
+12            0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|           0|
+ little k: 3
+_________________
+admissible bkps for 0 to 12
+3 4 5 6 7 8 9 10 
+admissible bkps for 0 to 10
+3 4 5 6 7 8 
+admissible bkps for 0 to 3
+
+admissible bkps for 0 to 4
+
+admissible bkps for 0 to 5
+3 
+admissible bkps for 0 to 6
+3 4 
+admissible bkps for 0 to 7
+3 4 5 
+admissible bkps for 0 to 8
+3 4 5 6 
+current min_cost is inf total cost for 10: 0.40824829
+10 is an optimal breakpoint with a cost of 0.40824829
+admissible bkps for 0 to 9
+3 4 5 6 7 
+current min_cost is 0.40824829 total cost for 9: 240.86649
+9 is not an optimal breakpoint with a cost of 240.86649
+current min_cost is 0.40824829 total cost for 8: 265.35392
+8 is not an optimal breakpoint with a cost of 265.35392
+current min_cost is 0.40824829 total cost for 7: 221.46851
+7 is not an optimal breakpoint with a cost of 221.46851
+current min_cost is 0.40824829 total cost for 6: 344.37671
+6 is not an optimal breakpoint with a cost of 344.37671
+current min_cost is 0.40824829 total cost for 5: inf
+5 is not an optimal breakpoint with a cost of inf
+current min_cost is 0.40824829 total cost for 4: inf
+4 is not an optimal breakpoint with a cost of inf
+current min_cost is 0.40824829 total cost for 3: inf
+3 is not an optimal breakpoint with a cost of inf
+ little k: 2
+_________________
+admissible bkps for 0 to 9
+3 4 5 6 7 
+current min_cost is inf total cost for 7: 2.1207406e-14
+7 is an optimal breakpoint with a cost of 2.1207406e-14
+current min_cost is 2.1207406e-14 total cost for 6: 76.750679
+6 is not an optimal breakpoint with a cost of 76.750679
+current min_cost is 2.1207406e-14 total cost for 5: inf
+5 is not an optimal breakpoint with a cost of inf
+current min_cost is 2.1207406e-14 total cost for 4: inf
+4 is not an optimal breakpoint with a cost of inf
+current min_cost is 2.1207406e-14 total cost for 3: inf
+3 is not an optimal breakpoint with a cost of inf
+ little k: 1
+_________________
+admissible bkps for 0 to 6
+3 4 
+current min_cost is inf total cost for 4: 1.110223e-15
+4 is an optimal breakpoint with a cost of 1.110223e-15
+current min_cost is 1.110223e-15 total cost for 3: 15.921683
+3 is not an optimal breakpoint with a cost of 15.921683
+top down results: 10 7 4 12 
