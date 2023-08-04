@@ -35,3 +35,4 @@
 *.bak
 *.[Cc]ache
 *.DS_Store
+*x64
