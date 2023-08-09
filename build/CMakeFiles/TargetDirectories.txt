@@ -1,3 +1,0 @@
-/mnt/c/Users/npkst/OneDrive/Documents/dupin/dupin/build/CMakeFiles/testinglib.dir
-/mnt/c/Users/npkst/OneDrive/Documents/dupin/dupin/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/npkst/OneDrive/Documents/dupin/dupin/build/CMakeFiles/rebuild_cache.dir
