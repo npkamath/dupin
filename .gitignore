@@ -37,3 +37,4 @@
 *.DS_Store
 x64
 build
+.venv
