@@ -49,7 +49,7 @@ void dupinalgo::regression_setup(linear_fit_struct &lfit) {
 	//normalize timestep vecotr
 	for (int i = 0; i < num_timesteps; ++i) {
 		lfit.x[i] = static_cast<double>(i) / (num_timesteps - 1) * 1.0;
-		cout << lfit.x[i] << " timestep check ";
+	//	cout << lfit.x[i] << " timestep check ";
 	}
 	lfit.y = datum;
 }
@@ -107,6 +107,14 @@ double dupinalgo::l2_cost(vector<vector<double>>& predicted_y, int start, int en
 }
 
 
+/*vector<double> computeCumulativeSum(vector<double>& arr) {
+	vector<double> cumsum(arr.size() + 1, 0.0);
+	for (int i = 0; i < arr.size(); ++i) {
+		cumsum[i + 1] = cumsum[i] + arr[i];
+	}
+	return cumsum;
+}
+*/
 
 vector <vector <double>>  dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
 	vector<vector<double>> predicted_y(num_timesteps, vector<double>(num_parameters));
@@ -165,7 +173,7 @@ vector<vector<double>> dupinalgo::initialize_cost_matrix(vector<vector<double>>&
 }
 vector<int> dupinalgo::admissible_bkps(int start, int end, int num_bkps) {
 	vector <int> list;
-	cout << "admissible bkps for " << start << " to " << end << endl;
+	//cout << "admissible bkps for " << start << " to " << end << endl;
 	for (int i = start + min_size; i < end; i = i + 1) {
 		int left_samples = i - start;
 		int right_samples = end - i;
@@ -174,7 +182,7 @@ vector<int> dupinalgo::admissible_bkps(int start, int end, int num_bkps) {
 			cout << i << " ";
 		}
 	}
-	cout << endl;
+	//cout << endl;
 	return list;
 }
 
@@ -228,7 +236,7 @@ vector<int> dupinalgo::return_breakpoints() {
 	opt_bkps.push_back(num_timesteps - 1);
 
 	if (num_bkps > cost_matrix.size()) {
-		cout << "num_bkps is bigger than cost_matrix.size()" << endl;
+	//	cout << "num_bkps is bigger than cost_matrix.size()" << endl;
 		return opt_bkps; // or throw an exception
 	}
 
@@ -237,45 +245,42 @@ vector<int> dupinalgo::return_breakpoints() {
 	int end = num_timesteps - 1;
 
 	while (little_k > 0) {
-		cout << " little k: " << little_k << "\n" << "_________________\n";
+	//	cout << " little k: " << little_k << "\n" << "_________________\n";
 		int optimal_bkp = -1;
 	
 
 		if (end >= cost_matrix.size()) {
-			cout << "end index is out of range: end=" << end << ", cost_matrix.size()=" << cost_matrix.size() << endl;
+	//		cout << "end index is out of range: end=" << end << ", cost_matrix.size()=" << cost_matrix.size() << endl;
 			return opt_bkps; // or throw an exception
 		}
 
 
 		vector<int> goodbkps = admissible_bkps(start, end, num_bkps);
-		
 		std::reverse(goodbkps.begin(), goodbkps.end()); 
-		auto iter = goodbkps.begin();
 		double min_cost = std::numeric_limits<double>::infinity();
 		for (auto& bkp : goodbkps) {
 			
 			double total_cost = seg(start, bkp, little_k - 1) + cost_matrix[bkp][end];
-			cout << "current min_cost is " << min_cost << " total cost for " <<bkp<< ": "<< total_cost<<endl;
-			if (total_cost <= min_cost && total_cost!= std::numeric_limits<double>::infinity() ) {
+	//		cout << "current min_cost is " << min_cost << " total cost for " <<bkp<< ": "<< total_cost<<endl;
+			if (total_cost < min_cost) {
 				min_cost = total_cost;
 				optimal_bkp = bkp;
-				cout << bkp << " is an optimal breakpoint with a cost of "<< total_cost << endl;
+	//			cout << bkp << " is an optimal breakpoint with a cost of "<< total_cost << endl;
 			}
 			
 			else {
-				cout << bkp << " is not an optimal breakpoint with a cost of " << total_cost<<  endl; 
+	//			cout << bkp << " is not an optimal breakpoint with a cost of " << total_cost<<  endl; 
 			}
 		}
+
 		if (optimal_bkp == -1) {
-		//	little_k-1; 
-			end = end - min_size;
+			little_k--;
 			continue;
 		}
 
 		opt_bkps.push_back(optimal_bkp);
-		
+		end = end - min_size;
 		little_k--;
-		end = *(iter + (num_bkps - little_k));
 	}
 	std::reverse(opt_bkps.begin(), opt_bkps.end());
 	return opt_bkps;
@@ -327,35 +332,35 @@ vector<int> dupinalgo::bottomup_bkps() {
 int main() {
 	dupinalgo dupin;
 	dupin.read_input();
-	cout << "Validating input: \n";
+	//cout << "Validating input: \n";
 	for (int i = 0; i < dupin.num_timesteps; i++) {
 		for (int j = 0; j < dupin.num_parameters; j++) {
-			cout << dupin.datum[i][j]<< " ";
+		///	cout << dupin.datum[i][j]<< " ";
 		}
-		cout << endl;
+		//cout << endl;
 	}
-	cout << "num_bkps: " << dupin.num_bkps << "\n";
-	cout << "num_parameters: " << dupin.num_parameters << "\n";
-	cout << "num_timesteps: " << dupin.num_timesteps << "\n";
-	cout << "jump: " << dupin.jump << "\n";
-	cout << "min_size: " << dupin.min_size << "\n";
+	//cout << "num_bkps: " << dupin.num_bkps << "\n";
+	//cout << "num_parameters: " << dupin.num_parameters << "\n";
+	//cout << "num_timesteps: " << dupin.num_timesteps << "\n";
+	//cout << "jump: " << dupin.jump << "\n";
+	//cout << "min_size: " << dupin.min_size << "\n";
 
 	dupin.initialize_cost_matrix(dupin.datum);
-	cout << "Validating cost matrix: \n";
+	//cout << "Validating cost matrix: \n";
 	for (int i = 1; i <= dupin.num_timesteps; i++) {
-		cout << setw(12) << i - 1 << " ";
+		//cout << setw(12) << i - 1 << " ";
 	}
-	cout << endl;
+	//cout << endl;
 	for (int i = 0; i < dupin.num_timesteps; i++) {
-		cout << i  << " ";
+		//cout << i  << " ";
 		for (int j = 0; j < dupin.num_timesteps; j++) {
-			cout << setw(12)<< setprecision(8)<< dupin.cost_matrix[i][j] << "|";
+			//cout << setw(12)<< setprecision(8)<< dupin.cost_matrix[i][j] << "|";
 		}
-		cout << endl;
+	//	cout << endl;
 	}
 //test top down
 	auto breakponts = dupin.getTopDownBreakpoints();
-	cout << "top down results: ";
+	//cout << "top down results: ";
 	for (auto &i : breakponts) {
 		cout << i << " "; 
 	}

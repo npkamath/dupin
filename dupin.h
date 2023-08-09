@@ -12,14 +12,16 @@
 #pragma once
 
 class dupinalgo {
-    dupinalgo()
-        : num_bkps(0), num_parameters(0), num_timesteps(0), jump(0), min_size(0) {
-        // The vectors and the unordered map are automatically initialized as empty, 
-        // so no additional code is needed for them.
-        // If there are other specific default values you want for the members, 
-        // you can add them in the constructor body.
-    }
+    
 public:
+    dupinalgo()
+        : num_bkps(0), num_parameters(0), num_timesteps(0), jump(1), min_size(3) {
+    }
+    dupinalgo(int num_bkps_, int num_parameters_, int num_timesteps_,
+        int jump_, int min_size_)
+        : num_bkps(num_bkps_), num_parameters(num_parameters_),
+        num_timesteps(num_timesteps_), jump(jump_), min_size(min_size_) {}
+
     int num_bkps;
     int num_parameters;
     int num_timesteps;
@@ -67,5 +69,5 @@ public:
     void read_input();
     std::vector<std::vector<double>> initialize_cost_matrix(std::vector<std::vector<double>>& datum);
     std::vector<int> getTopDownBreakpoints();
-    std::vector<int> getBottomUpBreakpoints();
+    //std::vector<int> getBottomUpBreakpoints();
 };
