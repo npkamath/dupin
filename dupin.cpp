@@ -107,14 +107,6 @@ double dupinalgo::l2_cost(vector<vector<double>>& predicted_y, int start, int en
 }
 
 
-/*vector<double> computeCumulativeSum(vector<double>& arr) {
-	vector<double> cumsum(arr.size() + 1, 0.0);
-	for (int i = 0; i < arr.size(); ++i) {
-		cumsum[i + 1] = cumsum[i] + arr[i];
-	}
-	return cumsum;
-}
-*/
 
 vector <vector <double>>  dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
 	vector<vector<double>> predicted_y(num_timesteps, vector<double>(num_parameters));
@@ -256,13 +248,15 @@ vector<int> dupinalgo::return_breakpoints() {
 
 
 		vector<int> goodbkps = admissible_bkps(start, end, num_bkps);
+		
 		std::reverse(goodbkps.begin(), goodbkps.end()); 
+		auto iter = goodbkps.begin();
 		double min_cost = std::numeric_limits<double>::infinity();
 		for (auto& bkp : goodbkps) {
 			
 			double total_cost = seg(start, bkp, little_k - 1) + cost_matrix[bkp][end];
 			cout << "current min_cost is " << min_cost << " total cost for " <<bkp<< ": "<< total_cost<<endl;
-			if (total_cost < min_cost) {
+			if (total_cost <= min_cost && total_cost!= std::numeric_limits<double>::infinity() ) {
 				min_cost = total_cost;
 				optimal_bkp = bkp;
 				cout << bkp << " is an optimal breakpoint with a cost of "<< total_cost << endl;
@@ -272,15 +266,16 @@ vector<int> dupinalgo::return_breakpoints() {
 				cout << bkp << " is not an optimal breakpoint with a cost of " << total_cost<<  endl; 
 			}
 		}
-
 		if (optimal_bkp == -1) {
-			little_k--;
+		//	little_k-1; 
+			end = end - min_size;
 			continue;
 		}
 
 		opt_bkps.push_back(optimal_bkp);
-		end = end - min_size;
+		
 		little_k--;
+		end = *(iter + (num_bkps - little_k));
 	}
 	std::reverse(opt_bkps.begin(), opt_bkps.end());
 	return opt_bkps;

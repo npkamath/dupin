@@ -12,6 +12,13 @@
 #pragma once
 
 class dupinalgo {
+    dupinalgo()
+        : num_bkps(0), num_parameters(0), num_timesteps(0), jump(0), min_size(0) {
+        // The vectors and the unordered map are automatically initialized as empty, 
+        // so no additional code is needed for them.
+        // If there are other specific default values you want for the members, 
+        // you can add them in the constructor body.
+    }
 public:
     int num_bkps;
     int num_parameters;
