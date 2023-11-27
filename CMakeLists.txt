@@ -16,4 +16,4 @@ set_target_properties(_dupin PROPERTIES
 
 
 target_compile_definitions(_dupin PRIVATE VERSION_INFO=${VERSION_INFO})
-target_compile_options(_dupin PRIVATE -O3 -march=native)
+target_compile_options(_dupin PRIVATE -O2 -march=native)
