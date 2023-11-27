@@ -1,18 +1,15 @@
 #include <iostream>
+#include <Eigen/Dense>
 #include <vector>
 #include <limits>
-#include <utility>
-#include <algorithm>
-#include <cmath>
-#include <iomanip>
-#include <cstring>
-#include <array>
 #include <unordered_map>
 #include "dupin.h"
+#include <iomanip>
 
 
 //#include <pybind11/numpy.h>
 using namespace std;
+using namespace Eigen;
 
 //Constructors
 
@@ -28,138 +25,90 @@ dupinalgo::dupinalgo(int num_bkps_, int num_parameters_, int num_timesteps_, int
 }
 
 void dupinalgo::read_input() {
-	cin >> jump >> min_size >> num_bkps >> num_parameters >> num_timesteps;
-	datum.resize(num_timesteps, vector<double>(num_parameters));
-	double temp;
-	for (int i = 0; i < num_timesteps; i++) {
-		for (int j = 0; j < num_parameters; j++) {
-			cin >> temp;
-			datum[i][j] = temp;
-
-		}
-
-	}
-	
+    cin >> jump >> min_size >> num_bkps >> num_parameters >> num_timesteps;
+    datum.resize(num_timesteps, num_parameters);
+    
+    for (int i = 0; i < num_timesteps; ++i) {
+        for (int j = 0; j < num_parameters; ++j) {
+            cin >> datum(i, j);
+        }
+    }
 }
 
 
 void dupinalgo::scale_datum() {
-    vector<double> min_val(num_parameters, std::numeric_limits<double>::max());
-    vector<double> max_val(num_parameters, std::numeric_limits<double>::lowest());
+    VectorXd min_val = datum.colwise().minCoeff();
+    VectorXd max_val = datum.colwise().maxCoeff();
+    VectorXd range = max_val - min_val;
 
-    // Find min and max values for each parameter
-    for (const auto& row : datum) {
-        for (int j = 0; j < num_parameters; ++j) {
-            min_val[j] = min(min_val[j], row[j]);
-            max_val[j] = max(max_val[j], row[j]);
-        }
-    }
-
-    // Scale the datum using min-max scaling
-    for (int i = 0; i < num_timesteps; ++i) {
-        for (int j = 0; j < num_parameters; ++j) {
-            double denominator = max_val[j] - min_val[j];
-            if (denominator == 0) {
-                datum[i][j] = 0; 
-            }
-			else{
-				datum[i][j] = (datum[i][j] - min_val[j]) / denominator;
-			}
-            
+    for (int j = 0; j < num_parameters; ++j) {
+        if (range(j) == 0.0) {
+            datum.col(j).setZero();
+        } else {
+            datum.col(j) = (datum.col(j).array() - min_val(j)) / range(j);
         }
     }
 }
-
 void dupinalgo::regression_setup(linear_fit_struct &lfit) {
-	lfit.x.resize(num_timesteps);
-	//
-	for (int i = 0; i < num_timesteps; ++i) {
-		lfit.x[i] = static_cast<double>(i) / (static_cast<double>(num_timesteps) - 1);
-	}
-	lfit.y = datum;
+    lfit.x = VectorXd::LinSpaced(num_timesteps, 0, num_timesteps - 1) / (num_timesteps - 1);
+    lfit.y = datum;
 }
 
-vector<double> dupinalgo::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
+VectorXd dupinalgo::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
     int n = end - start;
-    double sum_x = 0.0, sum_y = 0.0, sum_xy = 0.0, sum_xx = 0.0;
-    vector<double> line;
-    line.reserve(n); // Preallocate memory
+    VectorXd x = lfit.x.segment(start, n);
+    VectorXd y = lfit.y.col(dim).segment(start, n);
 
-    for (int i = start; i < end; ++i) {
-        double current_x = lfit.x[i];
-        double current_y = lfit.y[i][dim];
-        sum_x += current_x;
-        sum_y += current_y;
-        sum_xy += current_x * current_y;
-        sum_xx += current_x * current_x;
-    }
+    double x_mean = x.mean();
+    double y_mean = y.mean();
 
-    double denom = n * sum_xx - sum_x * sum_x;
-    double m = 0.0, b = sum_y / n; // Default to horizontal line at the average y value
+    // Convert the expressions to vectors before calculating the dot product
+    VectorXd x_centered = x.array() - x_mean;
+    VectorXd y_centered = y.array() - y_mean;
 
-    if (denom != 0.0) { // Only calculate slope if denominator is not zero
-        m = (n * sum_xy - sum_x * sum_y) / denom;
-        b = (sum_y - m * sum_x) / n;
-    }
+    double slope = x_centered.dot(y_centered) / x_centered.squaredNorm();
+    double intercept = y_mean - slope * x_mean;
 
-    for (int i = start; i < end; i++) {
-        double y = m * lfit.x[i] + b;
-        line.push_back(y);
-    }
-    return line;
+    // Return the fitted line
+    return x.unaryExpr([slope, intercept](double xi) { return slope * xi + intercept; });
 }
 
-double dupinalgo::l2_cost(vector<vector<double>> &predicted_y, int start, int end) {
-    double sum = 0.0;
-    for (int i = start; i < end; i++) {
-        for (int j = 0; j < num_parameters; j++) {
-            double diff = predicted_y[i][j] - datum[i][j];
-            sum += diff * diff;
+
+double dupinalgo::l2_cost(MatrixXd &predicted_y, int start, int end) {
+    MatrixXd diff = predicted_y.block(start, 0, end - start, num_parameters) - datum.block(start, 0, end - start, num_parameters);
+    return sqrt(diff.array().square().sum());
+}
+
+
+
+MatrixXd dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
+    MatrixXd predicted_y(num_timesteps, num_parameters);
+    for (int i = 0; i < num_parameters; i++) {
+        predicted_y.block(start, i, end - start, 1) = regressionline(start, end, i, lfit);
+    }
+    return predicted_y;
+}
+
+double dupinalgo::cost_function(int start, int end) {
+    linear_fit_struct lfit;
+    regression_setup(lfit);
+    MatrixXd predicted_y = predicted(start, end, lfit);
+    return l2_cost(predicted_y, start, end);
+}
+
+MatrixXd dupinalgo::initialize_cost_matrix(MatrixXd &datum) {
+    scale_datum();
+    cost_matrix.resize(num_timesteps, num_timesteps);
+    cost_matrix.setZero();
+
+    for (int i = 0; i < num_timesteps; i++) {
+        for (int j = i + min_size; j < num_timesteps; j++) {
+            cost_matrix(i, j) = cost_function(i, j);
         }
     }
-    return sqrt(sum);
+    return cost_matrix;
 }
 
-
-
-
-vector <vector <double>>  dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
-	vector<vector<double>> predicted_y(num_timesteps, vector<double>(num_parameters));
-	
-	for (int i = 0; i < num_parameters; i++) {
-		vector<double> line = regressionline(start, end, i, lfit);
-		for (int j = start; j < end; j++) {
-			predicted_y[j][i] = line[j - start];
-		}
-	}
-	return predicted_y;
-}
-double dupinalgo::cost_function(int start, int end) {
-	
-	linear_fit_struct lfit;
-	regression_setup(lfit);
-
-	// Compute predicted values
-	vector<vector<double>> predicted_y = predicted(start, end, lfit);
-
-	// Compute and return the L2 cost
-	double final_cost = l2_cost(predicted_y, start, end);
-	return final_cost;
-}
-
-
-vector<vector<double>> dupinalgo::initialize_cost_matrix(vector<vector<double>>& datum) {  //initialize and return the cost matrix
-	
-	scale_datum();
-	cost_matrix.resize(num_timesteps, vector<double>(num_timesteps, 0.0));// only fill out half the matrix
-	for (int i = 0; i < num_timesteps; i++) {
-		for (int j = i + min_size; j < num_timesteps; j++) {
-			cost_matrix[i][j] = cost_function(i, j); //fix to i and j
-		}
-	}
-	return cost_matrix;
-
-}
 
 //DP Solution Part
 
@@ -169,7 +118,7 @@ int recursiv_count = 0;
 //think about using 2d vector/array here//1d vector
 //top down recursive implementation
 // Recursive function to segment the data
- pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
+pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         MemoKey key = {start, end, num_bkps};
         auto it = memo.find(key);
         if (it != memo.end()) {
@@ -177,9 +126,8 @@ int recursiv_count = 0;
         }
 
         if (num_bkps == 0) {
-            return {cost_matrix[start][end], {end}};
+            return {cost_matrix(start, end), {end}};
         }
-
         pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
         for (int bkp = start + min_size; bkp < end; bkp++) {
             if ((bkp - start) >= min_size && (end - bkp) >= min_size) {
@@ -225,11 +173,11 @@ int dupinalgo::get_num_bkps() {
     return num_bkps;
 }
 
-vector<vector<double>>& dupinalgo::getDatum() {
+Eigen::MatrixXd& dupinalgo::getDatum() {
     return datum;
 }
 
-vector<vector<double>>& dupinalgo::getCostMatrix() {
+Eigen::MatrixXd& dupinalgo::getCostMatrix() {
     return cost_matrix;
 }
 
@@ -245,22 +193,22 @@ void dupinalgo::set_num_bkps(int value) {
     num_bkps = value;
 }
 
-void dupinalgo::setDatum(const vector<vector<double>>& value) {
+void dupinalgo::setDatum(const Eigen::MatrixXd& value) {
     datum = value;
 }   
 
-void dupinalgo::setCostMatrix(const vector<vector<double>>& value) {
+void dupinalgo::setCostMatrix(const Eigen::MatrixXd&value) {
     cost_matrix = value;
 }
 
 int main() {
-/*
+    
 	dupinalgo dupin;
     dupin.read_input();
     cout << "Validating input: \n";
     for (int i = 0; i < dupin.get_num_timesteps(); i++) {
         for (int j = 0; j < dupin.get_num_parameters(); j++) {
-            cout << dupin.getDatum()[i][j] << " ";
+            cout << dupin.getDatum()(i, j) << " ";
         }
         cout << endl;
     }
@@ -274,7 +222,7 @@ int main() {
     for (int i = 0; i < dupin.get_num_timesteps(); i++) {
         cout << i  << " ";
         for (int j = 0; j < dupin.get_num_timesteps(); j++) {
-            cout << setw(12) << setprecision(8) << dupin.getCostMatrix()[i][j] << "|";
+            cout << setw(12) << setprecision(8) << dupin.getCostMatrix()(i, j) << "|";
         }
         cout << endl;
     }
@@ -285,10 +233,5 @@ int main() {
 		cout << i << " "; 
 	}
 	cout << endl; 
-	auto botbreakponts = dupin.bottomup_bkps();
-	cout << "bot up results: "; 
-	for (auto &i : botbreakponts) {
-		cout << i << " "; 
-	}
-*/
+
 }

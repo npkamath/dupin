@@ -20,17 +20,18 @@ def compute_python_cost_matrix(signal: np.ndarray, min_size: int = 3):
 def compute_cplus_cost_matrix(signal: np.ndarray):
     
     algo = _dupin.DupinAlgo()
-    algo.num_bkps = 1; 
+    algo.num_bkps = 4; 
     algo.num_timesteps = signal.shape[0]
     algo.num_parameters = signal.shape[1]
-    algo.datum = signal.tolist()
+    algo.datum = np.asfortranarray(signal) 
     start1 = time.time()
     algo.initialize_cost_matrix(algo.datum)
- 
     
     
+
     topcppbkps = algo.getTopDownBreakpoints()
     end1 = time.time()
+  
     
     cpptime = end1-start1
     print("cpptime: ", cpptime)
@@ -39,7 +40,7 @@ def compute_cplus_cost_matrix(signal: np.ndarray):
 
 
 def generate_data():
-    data = (np.repeat([0, 8, 16, 24, 100], 240) + np.random.random(1200)).reshape((-1, 3))
+    data = (np.repeat([0, 8, 16, 24, 32], 240) + np.random.random(1200)).reshape((-1, 3))
     return data
 
 
