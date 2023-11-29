@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "dupin.h"
 #include <iomanip>
+#include <omp.h>
 
 
 //#include <pybind11/numpy.h>
@@ -100,7 +101,7 @@ MatrixXd dupinalgo::initialize_cost_matrix(MatrixXd &datum) {
     scale_datum();
     cost_matrix.resize(num_timesteps, num_timesteps);
     cost_matrix.setZero();
-
+    #pragma omp parallel for collapse(2)
     for (int i = 0; i < num_timesteps; i++) {
         for (int j = i + min_size; j < num_timesteps; j++) {
             cost_matrix(i, j) = cost_function(i, j);
@@ -128,7 +129,9 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         if (num_bkps == 0) {
             return {cost_matrix(start, end), {end}};
         }
+
         pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
+        
         for (int bkp = start + min_size; bkp < end; bkp++) {
             if ((bkp - start) >= min_size && (end - bkp) >= min_size) {
                 auto left = seg(start, bkp, num_bkps - 1);

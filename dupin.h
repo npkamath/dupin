@@ -6,6 +6,7 @@
 #include <limits>
 #include <algorithm>
 #include <Eigen/Dense>
+#include <omp.h>
 
 // dupinalgo class for dynamic programming based segmentation.
 class dupinalgo {
