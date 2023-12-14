@@ -4,6 +4,8 @@ project(_dupin)
 set(DEFAULT_BUILD_TYPE Release)
 
 find_package(OpenMP REQUIRED) 
+find_package(Eigen3 REQUIRED)
+find_package(TBB REQUIRED)
 
 add_subdirectory(extern/pybind11)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.4.0")
@@ -15,9 +17,8 @@ set_target_properties(_dupin PROPERTIES
     CMAKE_CXX_STANDARD_REQUIRED True
 )
 
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(_dupin PUBLIC OpenMP::OpenMP_CXX)
-endif()
 
+target_link_libraries(_dupin PUBLIC OpenMP::OpenMP_CXX)
+target_link_libraries(_dupin PRIVATE TBB::tbb)
 target_compile_definitions(_dupin PRIVATE VERSION_INFO=${VERSION_INFO})
 target_compile_options(_dupin PRIVATE -O2 -march=native -fopenmp)

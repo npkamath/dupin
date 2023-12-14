@@ -5,6 +5,10 @@ import dupin as du
 import ruptures as rpt
 import time
 from dupin.detect.costs import CostLinearFit
+from guppy import hpy
+
+h = hpy()
+
 
 random.seed(445)
 def compute_python_cost_matrix(signal: np.ndarray, min_size: int = 3):
@@ -41,8 +45,9 @@ def compute_cplus_cost_matrix(signal: np.ndarray):
 
 
 def generate_data():
-    data = (np.repeat([0, -200, -160, -201, -152, 200], 240) + np.random.random(1440)).reshape((-1, 3))
-    newdata = (np.repeat([0, 200, 0, 0], 60) + np.random.random(240)).reshape((-1,3))
+    soize = 200
+    data = (np.repeat([0, -200, -160, -201, -152, 200], soize) + np.random.random(soize*6)).reshape((-1, 3))
+    newdata = (np.repeat([0, 200, 0, 0], 180) + np.random.random(180*4)).reshape((-1,3))
     data = np.concatenate((data, newdata), axis=0)
     return data
 
@@ -74,6 +79,7 @@ def test_dupin():
     print("C++ is ", multiplier, " times faster!")
     print(f"python breakpoints: {sweepsweep.change_points_} opt change points: {sweepsweep.opt_change_points_}")
     print("Top Down C++ breakpoints:", topcppbkps)
+    print (h.heap())
 
 if __name__ == "__main__":
     test_dupin()

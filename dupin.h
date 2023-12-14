@@ -9,7 +9,7 @@
 #include <omp.h>
 
 // dupinalgo class for dynamic programming based segmentation.
-class dupinalgo {
+class dupinalgo { //change name to Dynamic Programming
 private:
     // Struct for memoization key, combining start, end, and number of breakpoints.
     struct MemoKey {
@@ -24,7 +24,7 @@ private:
     };
 
     // Custom XOR-bit hash function for MemoKey, avoids clustering of data in unordered map to improve efficiency.
-    struct MemoKeyHash {
+    struct MemoKeyHash { //test without hash function
         std::size_t operator()(const MemoKey& key) const {
             return ((std::hash<int>()(key.start) ^ (std::hash<int>()(key.end) << 1)) >> 1) ^ std::hash<int>()(key.num_bkps);
         }

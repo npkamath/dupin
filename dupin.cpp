@@ -6,6 +6,9 @@
 #include "dupin.h"
 #include <iomanip>
 #include <omp.h>
+#include <tbb/parallel_for.h>
+#include <tbb/blocked_range2d.h>
+
 
 
 //#include <pybind11/numpy.h>
@@ -84,7 +87,7 @@ double dupinalgo::l2_cost(MatrixXd &predicted_y, int start, int end) {
 
 MatrixXd dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
     MatrixXd predicted_y(num_timesteps, num_parameters);
-    for (int i = 0; i < num_parameters; i++) {
+    for (int i = 0; i < num_parameters; ++i) {
         predicted_y.block(start, i, end - start, 1) = regressionline(start, end, i, lfit);
     }
     return predicted_y;
@@ -102,8 +105,8 @@ MatrixXd dupinalgo::initialize_cost_matrix(MatrixXd &datum) {
     cost_matrix.resize(num_timesteps, num_timesteps);
     cost_matrix.setZero();
     #pragma omp parallel for collapse(2)
-    for (int i = 0; i < num_timesteps; i++) {
-        for (int j = i + min_size; j < num_timesteps; j++) {
+    for (int i = 0; i < num_timesteps; ++i) {
+        for (int j = i + min_size; j < num_timesteps; ++j) {
             cost_matrix(i, j) = cost_function(i, j);
         }
     }
@@ -115,7 +118,6 @@ MatrixXd dupinalgo::initialize_cost_matrix(MatrixXd &datum) {
 
 
 
-int recursiv_count = 0;
 //think about using 2d vector/array here//1d vector
 //top down recursive implementation
 // Recursive function to segment the data
