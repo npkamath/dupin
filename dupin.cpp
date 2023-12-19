@@ -8,6 +8,7 @@
 #include <omp.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range2d.h>
+#include <tbb/global_control.h>
 
 
 
@@ -100,21 +101,22 @@ double dupinalgo::cost_function(int start, int end) {
     return l2_cost(predicted_y, start, end);
 }
 
-MatrixXd dupinalgo::initialize_cost_matrix(MatrixXd &datum) {
+void dupinalgo::initialize_cost_matrix() {
+    tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
     scale_datum();
-    cost_matrix.resize(num_timesteps, num_timesteps);
-    cost_matrix.setZero();
-    #pragma omp parallel for collapse(2)
-    for (int i = 0; i < num_timesteps; ++i) {
-        for (int j = i + min_size; j < num_timesteps; ++j) {
-            cost_matrix(i, j) = cost_function(i, j);
+    cost_matrix_new.initialize(num_timesteps);
+
+    tbb::parallel_for(tbb::blocked_range<int>(0, num_timesteps), [&](const tbb::blocked_range<int>& r) {
+        for (int i = r.begin(); i < r.end(); ++i) {
+            for (int j = i + min_size; j < num_timesteps; ++j) {
+                cost_matrix_new(i, j) = cost_function(i, j);
+            }
         }
-    }
-    return cost_matrix;
+    });
 }
 
-
 //DP Solution Part
+
 
 
 
@@ -125,11 +127,12 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         MemoKey key = {start, end, num_bkps};
         auto it = memo.find(key);
         if (it != memo.end()) {
+//            memo_count++; 
             return it->second;
         }
-
+//            no_memo++;
         if (num_bkps == 0) {
-            return {cost_matrix(start, end), {end}};
+            return {cost_matrix_new(start, end), {end}};
         }
 
         pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
@@ -157,6 +160,7 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         vector<int> breakpoints = result.second;
         sort(breakpoints.begin(), breakpoints.end());
         breakpoints.erase(unique(breakpoints.begin(), breakpoints.end()), breakpoints.end());
+ //       cout << "Memo count: "<< memo_count << "no memo count: "<< no_memo<< endl; 
         return breakpoints;
     }
 
@@ -218,7 +222,7 @@ int main() {
         cout << endl;
     }
 
-    dupin.initialize_cost_matrix(dupin.getDatum());
+    dupin.initialize_cost_matrix();
     cout << "Validating cost matrix: \n";
     for (int i = 1; i <= dupin.get_num_timesteps(); i++) {
         cout << setw(12) << i - 1 << " ";

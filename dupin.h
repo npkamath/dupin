@@ -7,10 +7,39 @@
 #include <algorithm>
 #include <Eigen/Dense>
 #include <omp.h>
+#
+
 
 // dupinalgo class for dynamic programming based segmentation.
 class dupinalgo { //change name to Dynamic Programming
 private:
+    class upper_triangular_cost_matrix {
+    private:
+        std::vector<double> matrix;
+        int size;
+
+        int index(int i, int j) const {
+            return i * (2 * size - i + 1) / 2 + (j - i);
+        }
+
+    public:
+        upper_triangular_cost_matrix() : size(0) {}
+
+        void initialize(int n) {
+            size = n;
+            matrix.resize(n * (n + 1) / 2, 0.0);
+        }
+
+        double& operator()(int i, int j) {
+            return matrix[index(i, j)];
+        }
+
+        int getSize() const {
+            return size;
+        }
+        
+    };
+    upper_triangular_cost_matrix cost_matrix_new;
     // Struct for memoization key, combining start, end, and number of breakpoints.
     struct MemoKey {
         int start;
@@ -41,10 +70,12 @@ private:
     Eigen::MatrixXd datum; // Matrix storing the dataset.
     Eigen::MatrixXd cost_matrix; // Matrix storing computed costs for segmentation.
 
+    
+
     // Structure for storing linear regression parameters.
     struct linear_fit_struct {
         Eigen::MatrixXd y; // Dependent variable (labels).
-        Eigen::VectorXd x; // Independent variable (time steps).
+        Eigen::VectorXd x; //z Independent variable (time steps).
     };
 
 public:
@@ -76,7 +107,7 @@ public:
     double cost_function(int start, int end);
 
     // Initializes and fills the cost matrix for all data segments.
-    Eigen::MatrixXd initialize_cost_matrix(Eigen::MatrixXd &datum);
+    void initialize_cost_matrix();
 
     // Recursive function for dynamic programming segmentation.
     std::pair<double, std::vector<int>> seg(int start, int end, int num_bkps);

@@ -4,10 +4,16 @@ import random
 import dupin as du
 import ruptures as rpt
 import time
+import os
+import psutil
+
+
 from dupin.detect.costs import CostLinearFit
 from guppy import hpy
 
 
+p = psutil.Process(os.getpid())
+p.cpu_affinity([0])  # Limiting to core 0
 
 
 random.seed(445)
@@ -31,29 +37,26 @@ def compute_cplus_cost_matrix(signal: np.ndarray):
     algo.datum = np.asfortranarray(signal) 
     start1 = time.time()
     algo.initialize_cost_matrix()
-    
-    
-
     topcppbkps = algo.getTopDownBreakpoints()
     end1 = time.time()
   
     
     cpptime = end1-start1
     print("cpptime: ", cpptime)
-    return np.array(algo.cost_matrix), topcppbkps, cpptime
+    return topcppbkps, cpptime
 
 
 
-def generate_data():
-    soize = 1080
-    data = (np.repeat([0, -200, -160, -201, -152, 200], soize) + np.random.random(soize*6)).reshape((-1, 6))
-    newdata = (np.repeat([0, 200, 0, 0], 180) + np.random.random(180*4)).reshape((-1,6))
-    data = np.concatenate((data, newdata), axis=0)
+def generate_1_feature_data(size):
+
+    data = (np.repeat([0, 200, 400, 600, 800], size // 5) + np.random.random(size)).reshape((-1, 1))
+    
+
     return data
 
 def compute_cpp_operations(data):
-    cppcost_matrix, topcppbkps, cpptime = compute_cplus_cost_matrix(data)
-    return cppcost_matrix, topcppbkps, cpptime
+    topcppbkps, cpptime = compute_cplus_cost_matrix(data)
+    return topcppbkps, cpptime
 
 def compute_python_operations(data):
     start_time = time.time()
@@ -65,18 +68,24 @@ def compute_python_operations(data):
     return sweepsweep.change_points_, sweepsweep.opt_change_points_, pythontime
 
 def test_dupin():
-    data = generate_data()
-
+    datum = generate_1_feature_data(10000)
     # C++ Operations
-    cppcost_matrix, topcppbkps, cpptime = compute_cpp_operations(data)
+    total_time = 0
+#    for i in range(1,11):
+#        cppcost_matrix, topcppbkps, cpptime = compute_cpp_operations(current_data)
+#        total_time = total_time + cpptime
+#    print ("Average time for:",current_data.shape, ": ",  total_time/10)
+    
 
+    topcppbkps, cpptime = compute_cpp_operations(datum)
     # Python Operations
-    python_bkps, opt_python_bkps, pythontime = compute_python_operations(data)
+#    python_bkps, opt_python_bkps, pythontime = compute_python_operations(datum)
 
     # Comparing and printing results
-    multiplier = pythontime / cpptime
-    print("C++ is", multiplier, "times faster!")
-    print(f"Python breakpoints: {python_bkps} opt change points: {opt_python_bkps}")
+#    multiplier = pythontime / cpptime
+ #   print("C++ is", multiplier, "times faster!")
+ #   print(f"Python breakpoints: {python_bkps} opt change points: {opt_python_bkps}")
+    
     print("Top Down C++ breakpoints:", topcppbkps)
 
 if __name__ == "__main__":

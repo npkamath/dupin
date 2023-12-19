@@ -17,6 +17,10 @@ set_target_properties(_dupin PROPERTIES
     CMAKE_CXX_STANDARD_REQUIRED True
 )
 
+if(TBB_FOUND)
+    include_directories(${TBB_INCLUDE_DIRS})
+    link_directories(${TBB_LIBRARY_DIRS})
+endif()
 
 target_link_libraries(_dupin PUBLIC OpenMP::OpenMP_CXX)
 target_link_libraries(_dupin PRIVATE TBB::tbb)
