@@ -37,26 +37,43 @@ def compute_cplus_cost_matrix(signal: np.ndarray):
     algo.datum = np.asfortranarray(signal) 
     start1 = time.time()
     algo.initialize_cost_matrix()
-    topcppbkps = algo.getTopDownBreakpoints()
     end1 = time.time()
-  
-    
+    topcppbkps = algo.getTopDownBreakpoints("new")
+   
     cpptime = end1-start1
     print("cpptime: ", cpptime)
     return topcppbkps, cpptime
 
+def compute_cplus_cost_matrix2d(signal: np.ndarray):
+    
+    algo = _dupin.DupinAlgo()
+    algo.num_bkps = 4; 
+    algo.num_timesteps = signal.shape[0]
+    algo.num_parameters = signal.shape[1]
+    algo.datum = np.asfortranarray(signal) 
+    start1 = time.time()
+    algo.initialize_cost_matrix2d()
+    end1 = time.time()
+    topcppbkps = algo.getTopDownBreakpoints("old")
+    
+    cpptime = end1-start1
+    print("cpptime2d: ", cpptime)
+    return topcppbkps, cpptime
 
 
 def generate_1_feature_data(size):
 
     data = (np.repeat([0, 200, 400, 600, 800], size // 5) + np.random.random(size)).reshape((-1, 1))
-    
-
     return data
 
 def compute_cpp_operations(data):
     topcppbkps, cpptime = compute_cplus_cost_matrix(data)
     return topcppbkps, cpptime
+
+def compute_cpp_operations2d(data):
+    topcppbkps, cpptime = compute_cplus_cost_matrix2d(data)
+    return topcppbkps, cpptime
+
 
 def compute_python_operations(data):
     start_time = time.time()
@@ -68,7 +85,7 @@ def compute_python_operations(data):
     return sweepsweep.change_points_, sweepsweep.opt_change_points_, pythontime
 
 def test_dupin():
-    datum = generate_1_feature_data(10000)
+    datum = generate_1_feature_data(500)
     # C++ Operations
     total_time = 0
 #    for i in range(1,11):
@@ -78,6 +95,7 @@ def test_dupin():
     
 
     topcppbkps, cpptime = compute_cpp_operations(datum)
+    topcppbkps2, cpptime2 = compute_cpp_operations2d(datum)
     # Python Operations
 #    python_bkps, opt_python_bkps, pythontime = compute_python_operations(datum)
 
@@ -87,6 +105,7 @@ def test_dupin():
  #   print(f"Python breakpoints: {python_bkps} opt change points: {opt_python_bkps}")
     
     print("Top Down C++ breakpoints:", topcppbkps)
+    print("Top Down C++ breakpoints2d:", topcppbkps2)
 
 if __name__ == "__main__":
     test_dupin()

@@ -15,5 +15,6 @@ PYBIND11_MODULE(_dupin, m) {
         .def(py::init<>()) // Default constructor
         .def("read_input", &dupinalgo::read_input)
         .def("initialize_cost_matrix", &dupinalgo::initialize_cost_matrix)
+        .def("initialize_cost_matrix2d", &dupinalgo::initialize_cost_matrix_old)
         .def("getTopDownBreakpoints", &dupinalgo::getTopDownBreakpoints);  
 }

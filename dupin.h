@@ -108,13 +108,16 @@ public:
 
     // Initializes and fills the cost matrix for all data segments.
     void initialize_cost_matrix();
+    void initialize_cost_matrix_old(); 
 
     // Recursive function for dynamic programming segmentation.
     std::pair<double, std::vector<int>> seg(int start, int end, int num_bkps);
+    std::pair<double, std::vector<int>> segold(int start, int end, int num_bkps);
 
     // Returns the optimal set of breakpoints after segmentation.
     std::vector<int> return_breakpoints();
-    std::vector<int> getTopDownBreakpoints(); 
+    std::vector<int> return_breakpoints_old();
+    std::vector<int> getTopDownBreakpoints(std::string type); 
 
     // Getter functions for accessing private class members.
     int get_num_timesteps();

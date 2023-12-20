@@ -101,6 +101,19 @@ double dupinalgo::cost_function(int start, int end) {
     return l2_cost(predicted_y, start, end);
 }
 
+void dupinalgo::initialize_cost_matrix_old() {
+    tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
+    scale_datum();
+    cost_matrix.resize(num_timesteps, num_timesteps);
+    cost_matrix.setZero();
+    tbb::parallel_for(tbb::blocked_range<int>(0, num_timesteps), [&](const tbb::blocked_range<int>& r) {
+        for (int i = r.begin(); i < r.end(); ++i) {
+            for (int j = i + min_size; j < num_timesteps; ++j) {
+                cost_matrix(i, j) = cost_function(i, j);
+            }
+        }
+    });
+}
 void dupinalgo::initialize_cost_matrix() {
     tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
     scale_datum();
@@ -118,7 +131,47 @@ void dupinalgo::initialize_cost_matrix() {
 //DP Solution Part
 
 
+pair<double, vector<int>> dupinalgo::segold(int start, int end, int num_bkps) {
+        MemoKey key = {start, end, num_bkps};
+        auto it = memo.find(key);
+        if (it != memo.end()) {
+            return it->second;
+            cout <<"memo used!\n";
+        }
 
+        if (num_bkps == 0) {
+            return {cost_matrix(start, end), {end}};
+        }
+
+        pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
+        
+        for (int bkp = start + min_size; bkp < end; bkp++) {
+            if ((bkp - start) >= min_size && (end - bkp) >= min_size) {
+                auto left = segold(start, bkp, num_bkps - 1);
+                auto right = segold(bkp, end, 0);
+                double cost = left.first + right.first;
+                if (cost < best.first) {
+                    best.first = cost;
+                    best.second = left.second;
+                    best.second.push_back(bkp);
+                    best.second.insert(best.second.end(), right.second.begin(), right.second.end());
+                }
+            }
+        }
+
+        memo[key] = best;
+        return best;
+    }
+
+
+    vector<int> dupinalgo::return_breakpoints_old() {
+        auto result = segold(0, num_timesteps-1, num_bkps);
+        vector<int> breakpoints = result.second;
+        sort(breakpoints.begin(), breakpoints.end());
+        breakpoints.erase(unique(breakpoints.begin(), breakpoints.end()), breakpoints.end());
+ //       cout << "Memo count: "<< memo_count << "no memo count: "<< no_memo<< endl; 
+        return breakpoints;
+    }
 
 //think about using 2d vector/array here//1d vector
 //top down recursive implementation
@@ -165,8 +218,14 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
     }
 
 
-vector<int> dupinalgo::getTopDownBreakpoints() {
-	return dupinalgo::return_breakpoints();
+vector<int> dupinalgo::getTopDownBreakpoints(string type) {
+    if(type == "old"){
+        return dupinalgo::return_breakpoints_old();
+    }
+    else{
+        return dupinalgo::return_breakpoints();
+    }
+	
 }
 
 
@@ -236,7 +295,8 @@ int main() {
         cout << endl;
     }
 //test top down
-	auto topbreakponts = dupin.getTopDownBreakpoints();
+    string newp = "new";
+	auto topbreakponts = dupin.getTopDownBreakpoints(newp);
 	cout << "top down results: ";
 	for (auto &i : topbreakponts) {
 		cout << i << " "; 
