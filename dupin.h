@@ -10,8 +10,8 @@
 #
 
 
-// dupinalgo class for dynamic programming based segmentation.
-class dupinalgo { //change name to Dynamic Programming
+// DynamicProgramming class for dynamic programming based segmentation.
+class DynamicProgramming { //change name to Dynamic Programming
 private:
     class upper_triangular_cost_matrix {
     private:
@@ -39,7 +39,7 @@ private:
         }
         
     };
-    upper_triangular_cost_matrix cost_matrix_new;
+    upper_triangular_cost_matrix cost_matrix;
     // Struct for memoization key, combining start, end, and number of breakpoints.
     struct MemoKey {
         int start;
@@ -68,7 +68,6 @@ private:
     int jump; // Interval for checking potential breakpoints.
     int min_size; // Minimum size of a segment.
     Eigen::MatrixXd datum; // Matrix storing the dataset.
-    Eigen::MatrixXd cost_matrix; // Matrix storing computed costs for segmentation.
 
     
 
@@ -80,10 +79,10 @@ private:
 
 public:
     // Default constructor.
-    dupinalgo();
+    DynamicProgramming();
 
     // Parameterized constructor.
-    dupinalgo(int num_bkps_, int num_parameters_, int num_timesteps_, int jump_, int min_size_);
+    DynamicProgramming(int num_bkps_, int num_parameters_, int num_timesteps_, int jump_, int min_size_);
 
     // Scales the dataset using min-max normalization.
     void scale_datum();
@@ -108,28 +107,25 @@ public:
 
     // Initializes and fills the cost matrix for all data segments.
     void initialize_cost_matrix();
-    void initialize_cost_matrix_old(); 
 
     // Recursive function for dynamic programming segmentation.
     std::pair<double, std::vector<int>> seg(int start, int end, int num_bkps);
-    std::pair<double, std::vector<int>> segold(int start, int end, int num_bkps);
 
     // Returns the optimal set of breakpoints after segmentation.
     std::vector<int> return_breakpoints();
-    std::vector<int> return_breakpoints_old();
-    std::vector<int> getTopDownBreakpoints(std::string type); 
+    std::vector<int> getTopDownBreakpoints(); 
 
     // Getter functions for accessing private class members.
     int get_num_timesteps();
     int get_num_parameters();
     int get_num_bkps();
     Eigen::MatrixXd& getDatum();
-    Eigen::MatrixXd& getCostMatrix();
+    DynamicProgramming::upper_triangular_cost_matrix& getCostMatrix();
 
     // Setter functions for modifying private class members.
     void set_num_timesteps(int value);
     void set_num_parameters(int value);
     void set_num_bkps(int value);
     void setDatum(const Eigen::MatrixXd& value);
-    void setCostMatrix(const Eigen::MatrixXd& value);
+    void setCostMatrix(const DynamicProgramming::upper_triangular_cost_matrix& value);
 };

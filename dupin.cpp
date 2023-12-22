@@ -18,18 +18,18 @@ using namespace Eigen;
 
 //Constructors
 
-dupinalgo::dupinalgo()
+DynamicProgramming::DynamicProgramming()
     : num_bkps(0), num_parameters(0), num_timesteps(0), jump(1), min_size(3) {
   
 }
 
-dupinalgo::dupinalgo(int num_bkps_, int num_parameters_, int num_timesteps_, int jump_, int min_size_)
+DynamicProgramming::DynamicProgramming(int num_bkps_, int num_parameters_, int num_timesteps_, int jump_, int min_size_)
     : num_bkps(num_bkps_), num_parameters(num_parameters_), 
       num_timesteps(num_timesteps_), jump(jump_), min_size(min_size_) {
 
 }
 
-void dupinalgo::read_input() {
+void DynamicProgramming::read_input() {
     cin >> jump >> min_size >> num_bkps >> num_parameters >> num_timesteps;
     datum.resize(num_timesteps, num_parameters);
     
@@ -41,7 +41,7 @@ void dupinalgo::read_input() {
 }
 
 
-void dupinalgo::scale_datum() {
+void DynamicProgramming::scale_datum() {
     VectorXd min_val = datum.colwise().minCoeff();
     VectorXd max_val = datum.colwise().maxCoeff();
     VectorXd range = max_val - min_val;
@@ -54,12 +54,12 @@ void dupinalgo::scale_datum() {
         }
     }
 }
-void dupinalgo::regression_setup(linear_fit_struct &lfit) {
+void DynamicProgramming::regression_setup(linear_fit_struct &lfit) {
     lfit.x = VectorXd::LinSpaced(num_timesteps, 0, num_timesteps - 1) / (num_timesteps - 1);
     lfit.y = datum;
 }
 
-VectorXd dupinalgo::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
+VectorXd DynamicProgramming::regressionline(int start, int end, int dim, linear_fit_struct &lfit) {
     int n = end - start;
     VectorXd x = lfit.x.segment(start, n);
     VectorXd y = lfit.y.col(dim).segment(start, n);
@@ -79,14 +79,14 @@ VectorXd dupinalgo::regressionline(int start, int end, int dim, linear_fit_struc
 }
 
 
-double dupinalgo::l2_cost(MatrixXd &predicted_y, int start, int end) {
+double DynamicProgramming::l2_cost(MatrixXd &predicted_y, int start, int end) {
     MatrixXd diff = predicted_y.block(start, 0, end - start, num_parameters) - datum.block(start, 0, end - start, num_parameters);
     return sqrt(diff.array().square().sum());
 }
 
 
 
-MatrixXd dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
+MatrixXd DynamicProgramming::predicted(int start, int end, linear_fit_struct &lfit) {
     MatrixXd predicted_y(num_timesteps, num_parameters);
     for (int i = 0; i < num_parameters; ++i) {
         predicted_y.block(start, i, end - start, 1) = regressionline(start, end, i, lfit);
@@ -94,18 +94,20 @@ MatrixXd dupinalgo::predicted(int start, int end, linear_fit_struct &lfit) {
     return predicted_y;
 }
 
-double dupinalgo::cost_function(int start, int end) {
+double DynamicProgramming::cost_function(int start, int end) {
     linear_fit_struct lfit;
     regression_setup(lfit);
     MatrixXd predicted_y = predicted(start, end, lfit);
     return l2_cost(predicted_y, start, end);
 }
 
-void dupinalgo::initialize_cost_matrix_old() {
-    tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
+
+
+void DynamicProgramming::initialize_cost_matrix() {
+ //   tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
     scale_datum();
-    cost_matrix.resize(num_timesteps, num_timesteps);
-    cost_matrix.setZero();
+    cost_matrix.initialize(num_timesteps);
+
     tbb::parallel_for(tbb::blocked_range<int>(0, num_timesteps), [&](const tbb::blocked_range<int>& r) {
         for (int i = r.begin(); i < r.end(); ++i) {
             for (int j = i + min_size; j < num_timesteps; ++j) {
@@ -114,69 +116,14 @@ void dupinalgo::initialize_cost_matrix_old() {
         }
     });
 }
-void dupinalgo::initialize_cost_matrix() {
-    tbb::global_control c(tbb::global_control::max_allowed_parallelism, 1);
-    scale_datum();
-    cost_matrix_new.initialize(num_timesteps);
-
-    tbb::parallel_for(tbb::blocked_range<int>(0, num_timesteps), [&](const tbb::blocked_range<int>& r) {
-        for (int i = r.begin(); i < r.end(); ++i) {
-            for (int j = i + min_size; j < num_timesteps; ++j) {
-                cost_matrix_new(i, j) = cost_function(i, j);
-            }
-        }
-    });
-}
 
 //DP Solution Part
 
 
-pair<double, vector<int>> dupinalgo::segold(int start, int end, int num_bkps) {
-        MemoKey key = {start, end, num_bkps};
-        auto it = memo.find(key);
-        if (it != memo.end()) {
-            return it->second;
-            cout <<"memo used!\n";
-        }
-
-        if (num_bkps == 0) {
-            return {cost_matrix(start, end), {end}};
-        }
-
-        pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
-        
-        for (int bkp = start + min_size; bkp < end; bkp++) {
-            if ((bkp - start) >= min_size && (end - bkp) >= min_size) {
-                auto left = segold(start, bkp, num_bkps - 1);
-                auto right = segold(bkp, end, 0);
-                double cost = left.first + right.first;
-                if (cost < best.first) {
-                    best.first = cost;
-                    best.second = left.second;
-                    best.second.push_back(bkp);
-                    best.second.insert(best.second.end(), right.second.begin(), right.second.end());
-                }
-            }
-        }
-
-        memo[key] = best;
-        return best;
-    }
-
-
-    vector<int> dupinalgo::return_breakpoints_old() {
-        auto result = segold(0, num_timesteps-1, num_bkps);
-        vector<int> breakpoints = result.second;
-        sort(breakpoints.begin(), breakpoints.end());
-        breakpoints.erase(unique(breakpoints.begin(), breakpoints.end()), breakpoints.end());
- //       cout << "Memo count: "<< memo_count << "no memo count: "<< no_memo<< endl; 
-        return breakpoints;
-    }
-
 //think about using 2d vector/array here//1d vector
 //top down recursive implementation
 // Recursive function to segment the data
-pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
+pair<double, vector<int>> DynamicProgramming::seg(int start, int end, int num_bkps) {
         MemoKey key = {start, end, num_bkps};
         auto it = memo.find(key);
         if (it != memo.end()) {
@@ -185,7 +132,7 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         }
 //            no_memo++;
         if (num_bkps == 0) {
-            return {cost_matrix_new(start, end), {end}};
+            return {cost_matrix(start, end), {end}};
         }
 
         pair<double, vector<int>> best = {numeric_limits<double>::infinity(), {}};
@@ -208,7 +155,7 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
         return best;
     }
 
-    vector<int> dupinalgo::return_breakpoints() {
+    vector<int> DynamicProgramming::return_breakpoints() {
         auto result = seg(0, num_timesteps-1, num_bkps);
         vector<int> breakpoints = result.second;
         sort(breakpoints.begin(), breakpoints.end());
@@ -218,60 +165,55 @@ pair<double, vector<int>> dupinalgo::seg(int start, int end, int num_bkps) {
     }
 
 
-vector<int> dupinalgo::getTopDownBreakpoints(string type) {
-    if(type == "old"){
-        return dupinalgo::return_breakpoints_old();
-    }
-    else{
-        return dupinalgo::return_breakpoints();
-    }
+vector<int> DynamicProgramming::getTopDownBreakpoints() {
+        return DynamicProgramming::return_breakpoints();
 	
 }
 
 
-int dupinalgo::get_num_timesteps() {
+int DynamicProgramming::get_num_timesteps() {
     return num_timesteps;
 }
 
-int dupinalgo::get_num_parameters() {
+int DynamicProgramming::get_num_parameters() {
     return num_parameters;
 }
 
-int dupinalgo::get_num_bkps() {
+int DynamicProgramming::get_num_bkps() {
     return num_bkps;
 }
 
-Eigen::MatrixXd& dupinalgo::getDatum() {
+Eigen::MatrixXd& DynamicProgramming::getDatum() {
     return datum;
 }
 
-Eigen::MatrixXd& dupinalgo::getCostMatrix() {
+DynamicProgramming::upper_triangular_cost_matrix& DynamicProgramming::getCostMatrix() {
     return cost_matrix;
 }
 
-void dupinalgo::set_num_timesteps(int value) {
+void DynamicProgramming::set_num_timesteps(int value) {
     num_timesteps = value;
 }
 
-void dupinalgo::set_num_parameters(int value) {
+void DynamicProgramming::set_num_parameters(int value) {
     num_parameters = value;
 }
 
-void dupinalgo::set_num_bkps(int value) {
+void DynamicProgramming::set_num_bkps(int value) {
     num_bkps = value;
 }
 
-void dupinalgo::setDatum(const Eigen::MatrixXd& value) {
+void DynamicProgramming::setDatum(const Eigen::MatrixXd& value) {
     datum = value;
 }   
 
-void dupinalgo::setCostMatrix(const Eigen::MatrixXd&value) {
+void DynamicProgramming::setCostMatrix(const DynamicProgramming::upper_triangular_cost_matrix& value) {
     cost_matrix = value;
 }
 
 int main() {
     
-	dupinalgo dupin;
+	DynamicProgramming dupin;
     dupin.read_input();
     cout << "Validating input: \n";
     for (int i = 0; i < dupin.get_num_timesteps(); i++) {
@@ -295,8 +237,7 @@ int main() {
         cout << endl;
     }
 //test top down
-    string newp = "new";
-	auto topbreakponts = dupin.getTopDownBreakpoints(newp);
+	auto topbreakponts = dupin.getTopDownBreakpoints();
 	cout << "top down results: ";
 	for (auto &i : topbreakponts) {
 		cout << i << " "; 
